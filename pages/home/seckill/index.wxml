@@ -1,0 +1,265 @@
+<!--pages/home/activity/index.wxml-->
+<view id='activity'>
+  <view 
+    class="nav-bar {{isScroll ? 'on' : ''}}" 
+    style="height:{{navBarHeight}}px;">
+    <view class="nav-bar_title" style="height:{{menuHeight}}px; min-height:{{menuHeight}}px; line-height:{{ menuHeight}}px; left:{{menuRight}}px; right:{{menuRight}}px; bottom:{{menuBotton}}px;">
+      <image src="/images/icon/resizeApi.png" mode="widthFix" style="height:{{menuHeight}}px;" bindtap="navbar"></image>
+      {{name}}
+    </view>
+  </view>
+  <view class='activity' style="padding-top:{{navBarHeight}}px;">
+    <view class="activity-title" style="top:{{navBarHeight}}px;">
+      <view>{{name}}</view>
+      <image wx:if="{{type==3}}" src="/images/icon/limit.png"></image>
+      <image wx:elif="{{type==2}}" src="/images/icon/discount-banner.png"></image>
+      <image wx:else src="/images/icon/recommend.png"></image>
+    </view>
+    <view class="activity_con">
+      <view class="activity_list weui-flex" wx:for="{{activityList}}" wx:for-item="items" wx:key="{{items.id}}">
+        <block wx:if="{{type==1}}">
+          <view class="list_tis">
+            TOP
+            <view>{{index+1}}</view>
+          </view>
+          <view class='list_left list_left{{type}} weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <image src="{{items.show?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120':'/images/icon/load2.png'}}" mode="aspectFill" class="activity_img"></image>
+            <view class="special" wx:if="{{items.can_order==1&&items.av_status==0}}">
+              已售罄
+            </view>
+            <view class="special" wx:elif="{{items.av_status==1}}">
+              即将开始
+            </view>
+          </view>
+          <view class='list_con weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <view class='activity_list_title'>{{items.name}}</view>
+            <view class='activity_label'>
+              <text>{{items.spec}}</text>
+            </view>
+            <view class='activity_tag'>
+              <view wx:if="{{items.purchas_limit_each_one_everyday!=0}}">
+                限{{items.purchas_limit_each_one_everyday}}份
+              </view>
+              <view wx:elif="{{items.purchas_limit_each_sum_everyday!=0}}">
+                限购{{items.purchas_limit_each_sum_everyday}}份
+              </view>
+              <!-- <view wx:elif="{{items.purchase_limit!=0}}">
+                限量{{items.purchase_limit}}份
+              </view> -->
+              <view wx:if="{{index2===0&&items.tag_name!=''}}" wx:for="{{items.tag_name}}" wx:for-item="item2" wx:for-index="index2">{{item2}}</view>
+            </view>
+            <view class='activity_buttom'>
+              <!-- <text>￥{{items.price}}{{items.unit?'/'+items.unit:''}}</text> -->
+              <view style="color:#000000;">￥{{items.price_whole}}<text style="font-size:22rpx;" wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+            </view>
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num==0||items.shopping_cart_num==''}}" >
+            <view 
+              class='buy'
+              style="background: linear-gradient(90deg,#C3D939,#B4CB24);"
+              wx:if="{{items.can_order==1&&items.av_status==0}}">即将开始</view>
+            <view 
+              data-index="{{index}}" 
+              data-id="{{items.id}}"
+              catchtap="bindJia" 
+              class='buy'
+              wx:elif="{{items.deliver_date==''}}">{{button}}</view>
+            <view 
+              data-index="{{index}}" 
+              data-id="1"
+              catchtap="handleScreen" 
+              class='buy'
+              wx:elif="{{items.is_end_deliver!=1}}">{{button}}</view>
+            <!-- <view style="margin:0 10rpx 0 0;">
+              <view class="seal weui-flex" wx:if="{{items.is_end_limited_discount_whole==1}}">
+                <view>已结束</view>
+              </view>
+              <view class="seal weui-flex" wx:elif="{{items.is_end_deliver==1}}">
+                <view style="color:#C3D939;">已过期</view>
+              </view>
+              <view class="seal weui-flex" wx:elif="{{items.sell_out==1||items.t_sell_out==1}}">
+                <view>已售罄</view>
+              </view>
+            </view> -->
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num>=1}}" >
+            <view class='goods_refund weui-flex' >
+              <image data-index="{{index}}" catchtap="bindJian" wx:if="{{items.shopping_cart_num<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+              <image data-index="{{index}}" catchtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+              <input type="number" value="{{items.shopping_cart_num}}" 
+                data-index="{{index}}" disabled="disabled">
+              </input>
+              <block wx:if="{{items.deliver_date==''}}">
+                <image data-index="{{index}}" catchtap="bindJia" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" catchtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+              <block wx:else>
+                <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+            </view>
+          </view>
+        </block>
+
+        <block wx:if="{{type==3}}">
+          <view class='list_left weui-flex list_left{{type}}' bindtap="activity" data-id="{{items.id}}">
+            <image src="{{items.show?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120':'/images/icon/load2.png'}}" mode="aspectFill" class="activity_img"></image>
+            <view class="special" wx:if="{{items.can_order==1&&items.av_status==0}}">
+              已售罄
+            </view>
+            <view class="special" wx:elif="{{items.av_status==1}}">
+              即将开始
+            </view>
+          </view>
+          <view class='list_con weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <view class='activity_list_title'>{{items.name}}</view>
+            <view class='activity_buttom'>
+              <!-- <text style="font-size:22rpx;">￥{{items.price}}{{items.unit?'/'+items.unit:''}}</text> -->
+              <view style="color: #EF291A;"><text style="font-size:22rpx;color: #EF291A;">￥</text>{{items.price_whole}}<text style="font-size:22rpx;text-decoration:none;margin: 0;color: #EF291A;" wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+            </view>
+            <!-- <view class="activity_progress">
+              <progress percent="{{items.quantity_percentage}}" stroke-width="3" border-radius="12" active activeColor="#C3D939" stroke-width="12" duration="10" />
+              <view>已秒杀{{items.quantity_percentage}}%</view>
+            </view> -->
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num==0||items.shopping_cart_num==''}}" >
+            <view >
+              <view class="seckill_right-time weui-flex" wx:if="{{items.end_time_of_time_limited_discount_whole!=null}}">
+                <!-- <view wx:if="{{items.xiaoshi!=00}}">{{items.xiaoshi}}</view> -->
+                <!-- <text wx:if="{{items.xiaoshi!=00}}">:</text> -->
+                <view>{{items.fen}}</view>
+                <text>:</text>
+                <view>{{items.miao}}</view>
+                <text>:</text>
+                <view>{{items.micro}}</view>
+              </view>
+              <view 
+                class='buy' 
+                wx:if="{{items.can_order==1&&items.av_status==0}}"
+                style="background: linear-gradient(90deg,#C3D939,#B4CB24);">即将开始</view>
+              <view 
+                data-index="{{index}}" 
+                data-id="{{items.id}}"
+                catchtap="bindJia" 
+                class='buy' 
+                wx:elif="{{items.deliver_date==''}}"
+                style="background:linear-gradient(90deg,rgba(246,126,30,1),rgba(239,41,26,1));">{{button}}</view>
+              <view 
+                data-index="{{index}}" 
+                data-id="1"
+                catchtap="handleScreen" 
+                class='buy' 
+                wx:else
+                style="background:linear-gradient(90deg,rgba(246,126,30,1),rgba(239,41,26,1));">{{button}}</view>
+            </view>
+            <!-- <view style="margin:0 10rpx 0 0;">
+              <view class="seal weui-flex" wx:if="{{items.is_end_deliver==1}}">
+                <view>已结束</view>
+              </view>
+              <view class="seal weui-flex" wx:elif="{{items.is_end_limited_discount_whole==1}}">
+                <view style="color:#C3D939;">已过期</view>
+              </view>
+              <view class="seal weui-flex" wx:elif="{{items.sell_out==1||items.t_sell_out==1}}">
+                <view>已售罄</view>
+              </view>
+            </view> -->
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num>=1}}" >
+            <view class='goods_refund weui-flex' >
+              <!-- <view data-index="{{index}}" catchtap="bindJian" wx:if="{{items.shopping_cart_num<=1}}">-</view> -->
+              <image data-index="{{index}}" catchtap="bindJian" wx:if="{{items.shopping_cart_num<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+              <image data-index="{{index}}" catchtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+              <input type="number" value="{{items.shopping_cart_num}}" 
+                data-index="{{index}}" disabled="disabled">
+              </input>
+              <block wx:if="{{items.deliver_date==''}}">
+                <image data-index="{{index}}" data-id="{{items.id}}" catchtap="bindJia" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" data-id="{{items.id}}" catchtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+              <block wx:else>
+                <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+            </view>
+          </view>
+        </block>
+        
+        <block wx:if="{{type==2}}">
+          <view class='list_left weui-flex list_left{{type}}' bindtap="activity" data-id="{{items.id}}">
+            <image src="{{items.show?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120':'/images/icon/load3.png'}}" mode="aspectFill" class="activity_img"></image>
+            <view class="special" wx:if="{{items.can_order==1&&items.av_status==0}}">
+              已售罄
+            </view>
+            <view class="special" wx:elif="{{items.av_status==1}}">
+              即将开始
+            </view>
+          </view>
+          <view class='list_con weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <view class='discount_title'>{{items.name}}</view>
+            <view class="discount_buttom">
+              <!-- <image src="/images/icon/discount.png"></image> -->
+              <!-- <view>{{items.discount_rate}}折</view> -->
+              <view class="discount_rate" wx:if="{{items.original_price!='0.00'&&items.original_price!=''}}">{{items.discount_rate}}折</view>
+              <view style="font-size:22rpx;font-weight:bold;">￥<text>{{items.price_whole}}</text><text wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+            </view>
+          </view>
+          <view 
+            class='like_shopping'
+            wx:if="{{items.can_order==1&&items.av_status==0}}">
+            <view 
+              wx:if="{{items.shopping_cart_num>0}}"
+              class="weui-badge">{{items.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2(2).png' mode="widthFix"></image>
+          </view>
+          <view 
+            class='like_shopping'
+            data-id="{{items.id}}"
+            data-index="{{index}}" 
+            catchtap="bindJia"
+            wx:elif="{{items.deliver_date==''}}">
+            <view 
+              wx:if="{{items.shopping_cart_num>0}}"
+              class="weui-badge">{{items.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2(2).png' mode="widthFix"></image>
+          </view>
+          <view 
+            class='like_shopping'
+            data-index="{{index}}" 
+            data-id="1"
+            catchtap="handleScreen"
+            wx:else>
+            <view 
+              wx:if="{{items.shopping_cart_num>0}}"
+              class="weui-badge">{{items.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2(2).png' mode="widthFix"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- <view wx:else class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:#F3F3F3;">暂无数据</view>
+    </view> -->
+  </view>
+  
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>
+
+

@@ -1,0 +1,30 @@
+/* pages/my/feed_back_two/index.wxss */
+page{
+  background-color: #ffffff;
+}
+.feed_back_two_main{
+  text-align: center;
+}
+.feed_back_two_main image{
+  width: 250rpx;
+  margin: 50rpx 0;
+}
+.feed_back_two_main view{
+  font-size: 33rpx;
+  color: #333333;
+}
+.feed_back_two_main text{
+  font-size: 30rpx;
+  color: #666666;
+}
+.account_add_button{
+  border-radius: 15rpx;
+  background-color: #C3D939;
+  color: #ffffff;
+  font-size: 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  margin: 0 3.5%;
+  margin-top: 60rpx;
+}

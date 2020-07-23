@@ -1,0 +1,236 @@
+<view 
+  class="classify">
+  <view style="height:120rpx;"></view>
+  <view class="header">
+    <navigator 
+      url='/pages/home/search/index' 
+      hover-class="none" 
+      class='header_search weui-flex'>
+      <image 
+        src='/images/icon/search@2x.png' mode='widthFix'></image>
+      <input 
+        placeholder='商品搜索' 
+        disabled="true"
+        confirm-type="search"
+        value="{{search}}" 
+        data-name="search"
+        bindinput='bindInput'></input>
+    </navigator>
+  </view>
+  <view id="navbar" class="sider {{isFixedTop ? 'sider-fixed':''}}">
+    <scroll-view 
+      style="height:100%"
+      scroll-y="true" 
+      scroll-into-view="{{toView}}">
+      <view 
+        wx:for="{{navs}}"  
+        wx:key="{{item.id}}"
+        id="nav{{item.id}}"
+        data-index="{{index}}"
+        class="sider-item {{(item.id == pid) ? 'on':''}}" 
+        bindtap="handleNavs">
+        {{item.name}}
+      </view>
+    </scroll-view>
+  </view>
+  <view class="main">
+    <scroll-view 
+      bindscrolltolower="lower"
+      scroll-y="true">
+      <view wx:if="{{children.length}}" class="main-nav weui-flex weui-cell_access">
+        <view class="main-nav-list weui-flex">
+          <scroll-view 
+            class="weui-flex"
+            style="width:100%"
+            scroll-x="true"
+            scroll-into-view="{{toListView}}">
+            <view 
+              id="list{{index}}"
+              wx:for="{{children}}"
+              wx:key="{{item.id}}"
+              data-index="{{index}}"
+              bindtap="handleChildNavs"
+              class="nav-item {{item.id == category ? 'current' : ''}}">
+              {{item.name}}
+            </view>
+          </scroll-view>
+        </view>
+        <view 
+          class="weui-cell__ft"
+          bindtap="handleMask">sdfasd</view>
+      </view>
+      <view class="weui-navbar">
+      <block wx:for-items="{{tabs}}" wx:key="{{index}}">
+        <view 
+          id="{{index}}" 
+          class="weui-navbar__item {{screenIndex == index ? 'weui-bar__item_on' : ''}}" 
+          bindtap="tabClick">
+          <view class="weui-navbar__title weui-flex">
+            {{item}}
+            <view class="navbar__title-order" wx:if="{{index==tabs.length-1}}">
+                <view class="navbar__title-ascending {{order==2?'title-ascending':''}}"></view>
+                <view class="navbar__title-descending {{order==1?'title-descending':''}}"></view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+      <view wx:if="{{list.length}}" class="main-list">
+        <navigator 
+          wx:for="{{list}}"
+          wx:key="{{item.id}}"
+          url='/pages/home/goods_details/index?id={{item.id}}' 
+          hover-class="none" 
+          class="main-item weui-flex">
+          <view class='main-thumbnail weui-flex'>
+            <image 
+              class="{{item.show?'thumbnail-active':''}}"
+              src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100'}}"
+              mode="aspectFill" ></image>
+              <view class="special" wx:if="{{item.can_order==1&&item.av_status==0}}">
+                已售罄
+              </view>
+              <view class="special" wx:elif="{{item.av_status==1}}">
+                即将开始
+              </view>
+          </view>
+          <view class='main-primary'>
+            <view class='main-primary__title'>{{item.name}}</view>
+            <view class='main-primary__label' wx:if="{{item.spec!=''}}">
+              <text>{{item.spec}}</text>
+            </view>
+            <view class='main-primary__tag' wx:if="{{item.tag_name!=''||item.purchas_limit_each_one_everyday!=0||item.purchas_limit_each_sum_everyday!=0||item.purchase_limit!=0||(item.original_price!='0.00'||item.original_price!='')}}">
+              <text wx:if="{{item.purchas_limit_each_one_everyday!=0}}">限{{item.purchas_limit_each_one_everyday}}份</text>
+              <text wx:elif="{{item.purchas_limit_each_sum_everyday!=0}}">限购{{item.purchas_limit_each_sum_everyday}}份</text>
+              <!-- <text wx:elif="{{item.purchase_limit!=0}}">限量{{item.purchase_limit}}份</text> -->
+              <text wx:if="{{index1===0&&item.tag_name!=''}}" wx:for="{{item.tag_name}}" wx:for-item="items" wx:for-index="index1">{{items}}</text>
+              <text wx:if="{{item.discount_rate!=''}}">{{item.discount_rate}}折</text>
+            </view>
+            <view class='main-primary__price'>
+              <view><text style="font-size:24rpx;">￥</text>{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+              <text class="main-primary__books">参考价￥{{item.original_price}}</text>
+            </view>
+            <view class="add_cart" wx:if="{{(item.can_order==1&&item.av_status==0)||item.av_status==1}}">
+              <view 
+                class="main-primary__cart">
+                <image src='/images/icon/carts.png' mode='widthFix'></image>
+              </view>
+            </view>
+            <view class="add_cart" wx:elif="{{item.shopping_cart_num>=1}}">
+              <view class='goods_refund weui-flex' wx:if="{{item.shopping_cart_num>=1}}">
+                <image data-index="{{index}}" catchtap="bindJian" wx:if="{{item.shopping_cart_num<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+                <image data-index="{{index}}" catchtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+                <input type="number" value="{{item.shopping_cart_num}}" 
+                  data-index="{{index}}" disabled="disabled">
+                </input>
+                <block wx:if="{{item.deliver_date==''}}">
+                  <image data-index="{{index}}" data-id="{{item.id}}" catchtap="bindJia" wx:if="{{item.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                  <image data-index="{{index}}" data-id="{{item.id}}" catchtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+                </block>
+                <block wx:else>
+                  <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:if="{{item.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                  <image data-index="{{index}}" data-id="1" catchtap="handleScreen" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+                </block>
+              </view>
+            </view>
+            <view class="add_cart" wx:else>
+              <block wx:if="{{item.deliver_date==''}}">
+                <view 
+                  class="main-primary__cart"
+                  data-index="{{index}}" 
+                  data-id="{{item.id}}" 
+                  catchtap="bindJia">
+                  <image src='/images/icon/cart2.png' mode='widthFix'></image>
+                </view>
+              </block>
+              <block wx:else>
+                <view 
+                  class="main-primary__cart"
+                  data-index="{{index}}" 
+                  data-id="1" 
+                  catchtap="handleScreen">
+                  <image src='/images/icon/cart2.png' mode='widthFix'></image>
+                </view>
+              </block>
+            </view>
+          </view>
+        </navigator>
+        <!-- 到底了 -->
+        <view class="main-bottom" wx:if="{{page_index >= page_count}}">
+          <image 
+            class="main-bottom__logo"
+            src='/images/icon/logo.png' 
+            mode='widthFix'></image>
+          <view>已经到我的底线了</view> 
+          <view class="main-bottom__arrow weui-cell_access" bindtap="handleNext">
+            <view class="weui-cell__ft weui-flex">
+              下一类
+            </view>
+          </view>
+        </view>
+
+      </view>
+      <view wx:else class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        <view class="main-bottom__arrow weui-cell_access" bindtap="handleNext">
+          <view class="weui-cell__ft weui-flex">
+            下一类
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<block wx:if="{{showMask}}">
+  <view class="mask-nav">
+    <!-- <view 
+      id="mask-category" 
+      class="weui-flex weui-cell_access"
+      bindtap="handleMask">
+      <view class="mask-nav__title">全部分类</view>
+      <view 
+        class="weui-cell__ft"></view>
+    </view> -->
+    <view class="mask-nav-list weui-flex">
+      <view 
+        wx:for="{{children}}"
+        wx:key="{{item.id}}"
+        data-index="{{index}}"
+        bindtap="handleChildNavs"
+        class="nav-item {{item.id == category ? 'current' : ''}}">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+  <view 
+    class="mask" 
+    catchtap="handleMask"></view>
+</block>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>
+
+<button 
+  wx:if="{{token==''}}"
+  class="weui-btn login-wrap"
+  hover-class='none'
+  open-type="getUserInfo"
+  bindgetuserinfo="bindGetUserInfo">授权用户信息</button>

@@ -1,0 +1,240 @@
+/* pages/home/search/index.wxss */
+page{
+  background-color: #ffffff;
+  height: 100%;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  flex-direction: column;
+}
+.search{
+  padding-top: 100rpx;
+  flex: 1;
+}
+.header{
+  background-color: #ffffff;
+  padding: 20rpx 0;
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 999;
+}
+.header_search{
+  height: 80rpx;
+  margin: 0 30rpx;
+  background-color: #F6F6F6;
+  border-radius: 60rpx;
+  align-items: center;
+  padding: 0 1.5%;
+  color: #333333;
+}
+.header_search image{
+  width: 35rpx;
+  margin: 0 20rpx;
+}
+.header_search input{
+  flex: 1;
+  font-size: 30rpx;
+  padding-right: 15rpx;
+}
+.header_search view{
+  padding: 0 40rpx;
+  font-size: 30rpx;
+  border-left: 2rpx solid #DEDEDE
+}
+
+/* 历史搜索 */
+.history_title,.popular_title{
+  line-height: 80rpx;
+  font-size: 30rpx;
+  padding: 0 3.5%;
+}
+.history_title image,.popular_title image{
+  width: 35rpx;
+  float: right;
+  margin-top: 20rpx;
+}
+.history_con_text,.popular_con_text{
+  width: 160rpx;
+  text-align: center;
+  margin: 15rpx;
+  color: #333333;
+  font-size: 24rpx;
+  background-color: #F3F3F3;
+  border-radius: 20rpx;
+  padding: 8rpx 30rpx;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 搜索内容 */
+.weui-navbar{
+  width: 100%;
+  position: fixed;
+  top: 100rpx;
+  z-index: 999;
+}
+.weui-navbar__item{
+  color: #666666;
+  font-size:30rpx;
+  position: static;
+}
+.weui-navbar__title{
+  position:relative;
+}
+.navbar__title-order{
+  width: 25rpx;
+  display: inline-block;
+  padding-top: 10rpx;
+}
+.navbar__title-ascending{
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-bottom: 10rpx solid #666666;
+  margin-bottom: 6rpx;
+}
+.navbar__title-descending{
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 10rpx solid #666666;
+}
+.title-descending{
+  border-top: 12rpx solid #C3D939;
+}
+.title-ascending{
+  border-bottom: 12rpx solid #C3D939;
+}
+.weui-navbar__item.weui-bar__item_on,.weui-navbar__item:active{
+  background-color:transparent;
+}
+.weui-navbar__item.weui-bar__item_on{
+  color:#333333;
+}
+
+.weui-bar__item_on .weui-navbar__title:after{
+  content:"";
+  position:absolute;
+  bottom:-20rpx;
+  left:43%;
+  width:42rpx;
+  height:6rpx;
+  background-color:#C3D939;
+  margin:0 0 0 -21rpx;
+}
+/* 搜索内容 */
+.goods_con{
+  padding: 100rpx 3.5% 0 3.5%;
+  background-color: #F3F3F3;
+}
+.like_list{
+  padding: 30rpx;
+  background-color: #ffffff;
+  margin: 20rpx 0;
+  box-shadow: 0 0 10rpx #e2e2e2;
+}
+.list_left{
+  width: 170rpx;
+  margin-right: 15rpx;
+  align-items: center;
+  position: relative;
+}
+.like_img{
+  width: 100%;
+  height: 100%;
+  transition: all .3s ease;
+  opacity: 0;
+}
+.like_img-active{
+  opacity: 1;
+}
+.list_con{
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.like_list_title{
+  font-size: 26rpx;
+  color: #333333;
+  width: 320rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.like_label{
+  font-size: 22rpx;
+  color: #999999;
+}
+.like_label text{margin-right: 30rpx;}
+.like_tag view{
+  color: #EF291A;
+  font-size: 18rpx;
+  border: 2rpx solid #EF291A;
+  padding: 0 8rpx;
+  border-radius: 10rpx;
+  margin-right: 10rpx;
+  display: inline-block;
+}
+.like_buttom{
+  display: inline-block;
+}
+.like_buttom view:nth-child(1){
+  font-size: 26rpx;
+  color: #000000;
+  display: inline-block;
+}
+.like_buttom text:nth-child(2){
+  font-size: 26rpx;
+  color: #BEBEBE;
+  text-decoration:line-through;
+  margin: 0 20rpx;
+}
+.list_right{
+  position: relative;
+  margin-top: 115rpx;
+}
+.list_right image{
+  width: 50rpx;
+}
+.list_right .weui-badge{
+  position: absolute;
+  right: -18rpx;
+  top: -18rpx;
+  border:solid 5rpx #fff;
+}
+.special{
+  width: 98rpx;
+  height: 98rpx;
+  line-height: 98rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 20rpx;
+  position: absolute;
+  top: 0;left: 0;bottom: 0;right: 0;
+  margin: auto;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.mask_tiem{
+  background-color: #FFFFFF;
+  height:90rpx;
+  border-top: 2rpx solid #EEEDEF;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+}
+.mask_tiem view:nth-child(1){
+  flex: 1;
+  color: #666666;  
+}
+.mask_tiem view:nth-child(2){
+  background-color: #C3D939;
+  flex: 1;
+  color: #FFFFFF;
+}

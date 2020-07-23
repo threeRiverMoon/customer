@@ -1,0 +1,128 @@
+/* pages/home/seckill/index.wxss */
+page{
+  background-color: #F3F3F3;
+}
+#activity{
+  padding-top: 150rpx;
+}
+.activity-title{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 244rpx;
+  z-index: -1;
+}
+.activity-title image{
+  width: 100%;
+  height: 100%;
+}
+.activity_list{
+	margin-bottom:15px;
+  padding: 22rpx 30rpx;
+  box-shadow: 0 0 10rpx rgba(114, 114, 114, 0.103);
+  background-color: #ffffff;
+  position: relative;
+  border-radius: 10rpx;
+}
+.goods_con{
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  margin: 0 30rpx 30rpx 30rpx;
+}
+.goods_con>.weui-flex{
+  padding: 26rpx 20rpx;
+}
+.sort image{
+  width: 44rpx;
+  margin: 0 30rpx;
+}
+.sort view{
+  width: 44rpx;
+  margin: 0 30rpx;
+  text-align: center;
+  color: #333333;
+  font-size: 28rpx;
+}
+.goods_image{
+  width: 86rpx;
+  height: 86rpx;
+  border-radius: 10rpx;
+  position: relative;
+}
+.hot{
+  width: 42rpx;
+  height: 25rpx;
+  font-size: 15rpx;
+  background-color: #B360E3;
+  border-radius:6rpx;
+  position: absolute;
+  top: -5rpx;left: -5rpx;
+}
+.goods_title{
+  font-size: 26rpx;
+  line-height: 35rpx;
+  max-width: 350rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+.goods_image image:nth-child(1){
+  width: 100%;
+  height: 100%;
+  border-radius: 10rpx;
+  transition: all .3s ease;
+  opacity: 0;
+}
+.goods_image-active{
+  opacity: 1 !important;
+}
+.goods_details{
+  padding-left: 20rpx;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+.seckill_buttom text:nth-child(1){
+  font-size: 28rpx;
+  color: #000000;
+  line-height:26rpx;
+}
+.like_shopping{
+  float: right;
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  margin: 45rpx 30rpx 0 30rpx;
+}
+.like_shopping image{
+  width: 50rpx;
+}
+.like_shopping .weui-badge{
+  position:absolute;
+  right:-10rpx;
+  top:-10rpx;
+  font-size: 18rpx;
+  border:solid 5rpx #fff;
+}
+.weui-loadmore{
+  margin-top: 150rpx;
+}
+
+.mask_tiem{
+  background-color: #FFFFFF;
+  height:90rpx;
+  border-top: 2rpx solid #EEEDEF;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+}
+.mask_tiem view:nth-child(1){
+  flex: 1;
+  color: #666666;  
+}
+.mask_tiem view:nth-child(2){
+  background-color: #C3D939;
+  flex: 1;
+  color: #FFFFFF;
+}

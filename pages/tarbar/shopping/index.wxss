@@ -1,0 +1,355 @@
+page{
+  color: #333333;
+  background-color: #F3F3F3;
+}
+.empty{
+  
+}
+
+#container{
+  padding: 30rpx 30rpx 100rpx 30rpx;  
+  background-color: #F3F3F3;
+}
+/* 联系人信息 */
+.contacts{
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 15rpx;
+  margin-bottom: 20rpx;
+}
+.contacts_title{
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 26rpx;
+  position: relative;
+  color: #333333;
+}
+.contacts_title text:nth-child(2){
+  float: right;
+  color: #EF291A;
+}
+.goods_con>.weui-flex{
+  padding: 20rpx 0;
+}
+.contacts_tiem{
+  padding: 0 20rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  color: #333333;
+}
+.contacts_tiem image{
+  width: 30rpx;
+  margin: 0 15rpx 5rpx 0;
+}
+.goods_con_invalid{
+  color: #ffffff;
+  background-color: #999999;
+  border-radius: 10rpx;
+  padding: 5rpx 10rpx;
+  font-size: 22rpx;
+}
+
+.check_select{
+  width: 38rpx;
+  height: 38rpx;
+  border: 4rpx solid #666666;
+  border-radius: 50rpx;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15rpx;
+  margin-top: 20rpx;
+}
+.check_select view{
+  width: 25rpx;
+  height: 25rpx;
+  background-color: #EF291A;
+  border-radius: 50%;
+}
+.select{
+  border: 4rpx solid #EF291A;
+}
+.goods_image{
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.goods_image image{
+  width: 100%;
+  height: 100%;
+}
+.goods_image-active{
+  /* opacity: 1 !important; */
+}
+.goods_details{
+  padding-left: 20rpx;
+  flex: 1;
+}
+.goods_title{
+  font-size: 30rpx;
+  line-height: 35rpx;
+  max-width: 240rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+.goods_refund{
+  font-size: 30rpx;
+  color: #333333;
+  float: right;
+  align-items: center;
+  text-align: center;
+  border-radius: 10rpx;
+  margin: 50rpx 0 0 0;
+  height: 46rpx;
+}
+.goods_refund view{
+  width: 44rpx;
+  height: 44rpx;
+  line-height: 40rpx;
+  border-radius: 50%;
+  font-size: 35rpx;
+  border: 1rpx solid #CCCCCC;
+  color: #CCCCCC;
+}
+.goods_refund view:nth-child(3){
+  line-height: 44rpx;
+}
+.goods_refund input{
+  width: 80rpx;
+  height: 46rpx;
+}
+.goods_refund image{
+  width: 44rpx;
+}
+.goods_refund-bottom{
+  background-color: #C3D939;
+  color: #ffffff !important;
+  border: 1rpx solid #C3D939 !important;
+}
+.goods_tiem{
+  font-size: 22rpx;
+  color: #999999;
+  margin-bottom: 10rpx;
+}
+.goods_information{
+  font-size: 26rpx;
+  color: #999999;
+}
+.information_price{
+  color: #EF291A;
+  margin-right: 50rpx;
+  display: inline-block;
+}
+.prime_cost{
+  text-decoration:line-through;
+}
+.information_num{
+  float: right;
+}
+
+
+/* 猜你喜欢 */
+.like{
+  margin-top: 20rpx;
+}
+.like_title{
+  padding: 15rpx 3.5%;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #EF291A;
+}
+.like_title image{
+  width: 36rpx;
+  margin-right: 15rpx;
+  display: inline-block;
+}
+.like_con{
+  column-count:2;
+  padding: 15rpx 0;
+  overflow: hidden;
+}
+.like_list{
+  break-inside: avoid;
+	padding: 0 0 30rpx 0;
+  /* box-shadow: 0 0 15rpx rgba(0, 0, 0, 0.103); */
+}
+.like_lists{
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  overflow: hidden;
+  padding: 30rpx
+}
+.like_img{
+  width: 260rpx;
+  height: 260rpx;
+  margin: 0 auto 20rpx auto;
+}
+.like_img image{
+  width: 100%;
+  height: 100%;
+}
+.like_img-active{
+  /* opacity: 1 !important; */
+}
+.like_list_title{
+  font-size: 26rpx;
+  color: #333333;
+}
+.like_label{
+  font-size: 22rpx;
+  color: #999999;
+}
+.like_label text{margin-right: 30rpx;}
+.like_buttom{
+  width: 198rpx;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.like_buttom view:nth-child(1){
+  font-size: 30rpx;
+  color: #EF291A;
+  display: inline-block;
+}
+.like_buttom text:nth-child(2){
+  font-size: 20rpx;
+  color: #BEBEBE;
+  text-decoration:line-through;
+  margin-left: 10rpx;
+}
+.like_buttom view{
+  font-size: 20rpx;
+  color: #999999;
+}
+.like_shopping{
+  margin-top: 25rpx;
+  float: right;
+  position: relative;
+}
+.like_shopping image{
+  width: 60rpx;
+}
+.like_shopping .weui-badge{
+  position:absolute;
+  right:-13rpx;
+  top:-17rpx;
+  border:solid 5rpx #fff;
+}
+
+
+/* 操作块 */
+#footer{
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width:100%;
+  padding:0 30rpx;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  align-items: center;
+  border-top: 2rpx solid #EEEEEE;
+  z-index: 999
+}
+.check_all{
+  align-items: center;
+}
+.footer_right{
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+.footer_total{
+  font-size: 26rpx;
+  color: #666666;
+}
+.footer_total text{
+  font-size: 36rpx;
+  color: #F03E33;
+}
+.footer_settlement{
+  color: #ffffff;
+  background-color: #EF291A;
+  font-size: 30rpx;
+  padding: 10rpx 30rpx;
+  border-radius: 40rpx;
+  margin-left: 20rpx;
+}
+.footer_settlement_hui{
+  background-color: #989898;
+}
+.mask_tiem{
+  background-color: #FFFFFF;
+  height:90rpx;
+  border-top: 2rpx solid #EEEDEF;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+}
+.mask_tiem view:nth-child(1){
+  flex: 1;
+  color: #666666;  
+}
+.mask_tiem view:nth-child(2){
+  background-color: #C3D939;
+  flex: 1;
+  color: #FFFFFF;
+}
+.item {
+  display:flex;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #fff;
+  position: relative;
+  z-index: 99;
+  width: 100%;
+  margin-right:0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  margin-left: -90px
+
+}
+.remove {
+  background-color: orangered;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.touch-move-active .item,.touch-move-active .remove {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+
+.mask_tiem{
+  background-color: #FFFFFF;
+  height:90rpx;
+  border-top: 2rpx solid #EEEDEF;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+}
+.mask_tiem view:nth-child(1){
+  flex: 1;
+  color: #666666;
+}
+.mask_tiem view:nth-child(2){
+  background-color: #C3D939;
+  flex: 1;
+  color: #FFFFFF;  
+}

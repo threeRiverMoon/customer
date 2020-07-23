@@ -1,0 +1,241 @@
+/**app.wxss**/
+@import '/miniprogram_npm/weui-miniprogram/weui-wxss/dist/style/weui.wxss';
+page{
+  height:100%;
+  width:100%;
+  position:relative;
+  background-color:#F3F3F3;
+  font-family: "Microsoft YaHei Helvetica Neue,sans-serif";
+  color: #333333;
+}
+
+image{
+  width:100%;
+  height:auto;
+  vertical-align:middle;
+}
+
+button:not([size='mini']){
+  width: 100% !important;
+}
+
+.weui-cells:after,.weui-cells:before,.weui-cell:before{
+  border:none;
+}
+
+.weui-btn_primary{
+  background-color: #C3D939;
+}
+
+.login-wrap{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:100% !important;
+  z-index:9000;
+  margin:0;
+  opacity:0;
+}
+
+.price_hei{
+  color: #333333 !important;
+}
+
+/* 版本 */
+.edition{
+  padding:45rpx 65rpx;
+  text-align: center;
+  color: #999999;
+  font-size: 24rpx;
+}
+.edition image{
+  width:71rpx;
+}
+.edition > view{
+  line-height: 26rpx;
+  margin:19rpx 0 0;
+}
+
+
+.num{
+  position: absolute;
+  top: -10rpx;
+  right: 35rpx;
+  border-radius: 50%;
+  background-color: #F80B01;
+  color: #fff;
+  width: 35rpx;
+  height: 35rpx;
+  font-size: 20rpx;
+  line-height: 35rpx;
+  text-align: center;
+}
+/* 空数据文案 */
+.nothing{
+  width: 100%;
+  font-size: 26rpx;
+  color: #818181;
+  text-align: center;
+  padding-top: 40%;
+}
+.nothing image{
+  width: 200rpx;
+  margin-bottom: 30rpx;
+}
+.nothing_bottom{
+  background-color: #C3D939;
+  color: #fff;
+  border-radius: 35rpx;
+  width: 180rpx;
+  line-height: 60rpx;
+  margin: 38rpx auto;
+}
+.nothing_bottom2{
+  color: #C3D939;
+  border-radius: 35rpx;
+  border: 2rpx solid #C3D939;
+  width: 180rpx;
+  line-height: 60rpx;
+  margin: 38rpx auto;
+}
+
+
+
+/* 遮罩层 */
+#mask{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;bottom: 0;left: 0;right: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  text-align: center;
+}
+.mask_con{
+  width: 80%;
+  background-color: #ffffff;
+  margin: 0 auto;
+  margin-top: 40%;
+  text-align: center;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  overflow: hidden;
+}
+.mask_con textarea{
+  width: auto;
+  background-color: #F3F3F3;
+  text-align: left;
+  padding: 10rpx;
+  font-size: 30rpx;
+}
+.mask_con image{
+  width: 160rpx;
+}
+.mask_con view{
+  line-height: 70rpx;
+}
+.mask_con text{
+  color: #666666;
+  font-size: 30rpx;
+}
+.mask_bottom{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background-color: #C3D939;
+  border-radius: 15rpx;
+  padding: 10rpx 0;
+  font-size: 30rpx;
+  margin: 0 20rpx;
+  margin-top: 40rpx;
+}
+.mask_close{
+  width: 90rpx;
+  margin-top: 30rpx;
+}
+.mask_inquiry,.mask_inquirys{
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  margin-top: 60rpx;
+  border-top: 2rpx solid #F1F1F1F1;
+  background-color: rgb(248, 248, 248);
+}
+.mask_inquiry view{padding: 15rpx 0;}
+.mask_cancel{
+  flex: 1;
+  color: #666666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mask_confirm{
+  flex: 1;
+  color: #C3D939;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mask_cancels{
+  width: 200rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 30rpx;
+}
+.mask_confirms{
+  width: 200rpx;
+  color:#2BBE4C;
+  border:2rpx solid #2BBE4C;
+  border-radius: 30rpx;
+  overflow: hidden;
+}
+.mask_confirms button:not([size='mini']){
+  width: auto;
+}
+
+/* 筛选弹窗 */
+.mask_screen{
+  position: fixed;
+  bottom: 0;
+  border-top-left-radius: 15rpx;
+  border-top-right-radius: 15rpx;
+  background-color: #ffffff;
+  width: 100%;
+  /* height: 600rpx; */
+  overflow: hidden;
+  z-index: 999;
+  text-align: center;
+}
+.screen_title{
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #333333;
+  font-size: 30rpx;
+  padding: 0 3.5%;
+  position: relative;
+}
+.screen_title image{
+  width: 40rpx;
+  position: absolute;
+  right: 3.5%;
+  top: 20rpx;
+}
+.screen_con{
+  font-size: 30rpx;
+  color: #666666;
+}
+
+.clearfix:after{
+  content: "020"; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;  
+}
+
+.clearfix {
+/* 触发 hasLayout */ 
+zoom: 1; 
+}

@@ -1,0 +1,71 @@
+<view id='container'>
+  <view class='header'>
+    <view class='header_search'>
+      <image src='/images/icon/search@2x.png' mode='widthFix'></image>
+      <input 
+        placeholder='搜索自提点' 
+        value="{{search}}" 
+        data-name="search"
+        bindinput='bindInput'></input>
+    </view>
+  </view>
+  <!-- 自提点列表 -->
+  <view wx:if="{{list.length==0}}" class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+  <view class='carry'>
+    <block wx:if="{{!search}}">
+      <view class='carry_title' wx:if="{{common_store!=''}}">常用</view>
+      <view 
+        class='carry_list weui-flex' 
+        wx:for="{{common_store}}"
+        id="{{item.id}}"
+        data-name="{{item.name}}"
+        data-location="{{item.location}}"
+        bindtap="handleStore">
+        <view class='carry_user'>
+          <image src='/images/icon/location_hui.png' mode='widthFix'></image>
+        </view>
+        <view class='carry_con'>
+          <text>{{item.name}}</text>
+          <view>店长电话：{{item.phone}}</view>
+          <view>{{item.province}}{{item.region}}{{item.detail}}</view>
+        </view>
+        <view class='carry_operation weui-flex' data-location="{{item.location}}" catchtap="handleditu">
+          <image src="/images/icon/daohang.png"></image>
+          <view>{{item.distance}}KM</view>
+        </view>
+      </view>
+    </block>
+    <view class='carry_title' wx:if="{{!search}}">附近自提点</view>
+    <view 
+      class='carry_list weui-flex' 
+      wx:for="{{list}}"
+      id="{{item.id}}"
+      data-name="{{item.name}}"
+      data-location="{{item.location}}"
+      bindtap="handleStore">
+      <view class='carry_user'>
+        <image src='/images/icon/location_hui.png' mode='widthFix'></image>
+      </view>
+      <view class='carry_con'>
+        <text>{{item.name}}</text>
+        <view>店长电话：{{item.phone}}</view>
+        <view>{{item.province}}{{item.region}}{{item.detail}}</view>
+      </view>
+      <view class='carry_operation weui-flex' data-location="{{item.location}}" catchtap="handleditu">
+        <image src="/images/icon/daohang.png"></image>
+        <view>{{item.distance}}KM</view>
+      </view>
+    </view>
+  </view>
+  <view class="buttom" bindtap="store_list" data-index="1" wx:if="{{near_distance==3}}">
+    查看更多  <image src="/images/icon/bottom.png"></image>
+  </view>
+</view>
+
+<view class='wx-toast-box weui-flex' wx:if="{{name}}">
+  <view class='wx-toast-content'>
+    <view class='wx-toast-toast'>{{ name }}选择成功</view>
+  </view>
+</view>

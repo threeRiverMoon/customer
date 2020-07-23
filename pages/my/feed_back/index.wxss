@@ -1,0 +1,75 @@
+/* pages/home/feed_back/index.wxss */
+.feedback-main{
+  background-color:#fff;
+  padding:40rpx 30rpx;
+}
+.feedback-main_title{
+  font-size:32rpx;
+  margin:0 0 34rpx 0;
+}
+.feedback-textarea{
+  background-color: #FBFBFB;
+  font-size:24rpx;
+  padding:20rpx 32rpx 40rpx;
+  position:relative;
+  line-height:32rpx;
+}
+.weui-textarea{
+  padding:20rpx 0;
+}
+.upload{
+  margin:0 0 0 -30rpx;
+}
+.upload-item{
+  width:118rpx;
+  height:118rpx;
+  box-shadow:0px 0px 3px rgba(0,0,0,0.05);
+  border-radius:20rpx;
+  background-color:#fff;
+  margin:0 0 0 30rpx;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.upload-item icon{
+ position:absolute;
+ right:-10rpx; 
+ top:-10rpx; 
+}
+.upload-icon{
+  width:40rpx;
+}
+.upload-item_image{
+  width:100%;
+  height:100%;
+}
+.number{
+  position:absolute;
+  bottom:30rpx;
+  right:34rpx;
+  color:#BCBCBC;
+}
+.weui-cells{
+  margin:20rpx 0 0;
+}
+.weui-cell{
+  padding:30rpx;
+}
+.weui-cell__hd{
+  font-size:28rpx;
+  margin:0 20rpx 0 0;
+}
+.weui-input{
+  font-size:24rpx;
+}
+.feedback-btn{
+  padding:70rpx 32rpx 0;
+}
+.feedback-btn button[type='primary']{
+  width:100%;
+  background-color: #C3D939;
+  font-size:30rpx;
+  border-radius:10rpx;
+  padding:20rpx 0;
+  line-height:50rpx;
+}

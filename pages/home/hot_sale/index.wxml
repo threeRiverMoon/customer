@@ -1,0 +1,87 @@
+<!--pages/home/activity/index.wxml-->
+<view id='activity'>
+  <view class='activity'>
+    <view class="activity-title">
+      <image src="/images/icon/hot_sale.png"></image>
+    </view>
+    <block wx:if="{{hotGoodsList.length!=0}}">
+      <!-- 最近热销 -->
+      <view class='goods_con' style="padding-bottom:5rpx;">
+        <!-- 商品列表 -->
+        <navigator 
+          class='weui-flex list_emptyList' 
+          wx:for="{{hotGoodsList}}" 
+          wx:key="{{item.id}}" 
+          style="align-items: center;"
+          url="/pages/home/goods_details/index?id={{item.id}}" 
+          hover-class="none" >
+          <view class="sort">
+            <image src="/images/icon/{{index+1}}.png" wx:if="{{index<=2}}" mode="widthFix"></image>
+            <view wx:else>{{index+1}}</view>
+          </view>
+          <view class='goods_image'>
+            <image src="{{HOST}}{{item.thumbnail}}" class="{{item.show?'goods_image-active':''}}"></image>
+            <image class="hot" src="/images/icon/hot.png" wx:if="{{index==0}}"></image>
+          </view>
+          <view class='goods_details weui-flex'>
+            <view class='goods_title' style="color:#666666;">{{item.name}}</view>
+            <view class='seckill_buttom price_hei'>
+              <!-- <text style="font-size:30rpx;">￥{{item.price}}{{item.unit?'/'+item.unit:''}}</text> -->
+              <view style="font-size:30rpx;">￥{{item.price_whole}}<text style="font-size:22rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text>{{item.unit?'/'+item.unit:''}}</view>
+            </view>
+          </view>
+          <view 
+            class='like_shopping'
+            wx:if="{{(item.end_time_of_time_limited_discount_whole!=null&&item.activity_status==0)||item.is_end_deliver==1||item.sell_out==1||item.t_sell_out==1||item.is_end_limited_discount_whole==1}}">
+            <image src='/images/icon/carts.png' mode="widthFix"></image>
+          </view>
+          <view 
+            class='like_shopping'
+            id="{{item.id}}"
+            catchtap="handleCart"
+            wx:elif="{{item.deliver_date==''}}">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2.png' mode="widthFix"></image>
+          </view>
+          <view 
+            class='like_shopping'
+            data-id="1"
+            data-index="{{index}}"
+            catchtap="handleScreen"
+            wx:else>
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2.png' mode="widthFix"></image>
+          </view>
+        </navigator>
+      </view>
+    </block>
+    <view wx:else class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:#F3F3F3;">暂无数据</view>
+    </view>
+  </view>
+  
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>
+

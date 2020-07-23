@@ -1,0 +1,107 @@
+<view id='container'>
+  <view id='header'>
+    <!-- 订单状态 -->
+    <view>{{detailsData.status==0?'待付款':detailsData.status==1?'订单已付款':detailsData.status==2||detailsData.status==3?'订单待自提':detailsData.status==-2?'订单已关闭':detailsData.status==-1?'订单已取消':'订单已自提'}}</view>
+    <text style='color:#EF291A;' wx:if="{{detailsData.status==0}}">若订单无付款，次日0点订单会自动关闭，请您尽快支付哦~</text>
+    <text wx:if="{{detailsData.status==1}}">店长正在配货中，请稍等片刻哦</text>
+    <text style='color:#EF291A;' wx:if="{{detailsData.status==2||detailsData.status==3}}">您有时间记得过来到店自提哦</text>
+    <text wx:if="{{detailsData.status>=4}}">感谢您对为餐小栈的支持，欢迎您下次光临。</text>
+    <text wx:if="{{detailsData.status==-2}}">由于超时未支付，订单已关闭</text>
+    <text wx:if="{{detailsData.status==-1}}">用户取消订单，订单已取消</text>
+  </view>
+  <!-- 联系人信息 -->
+  <view class='contacts'>
+    <view class='contacts_title'>联系人信息</view>
+    <view class='contacts_con'>
+      <view class='contacts_con_view'>{{detailsData.store_name}}</view>
+      <text>提货地址：{{detailsData.province}}{{detailsData.region}}{{detailsData.area}}{{detailsData.detail}}</text>
+      <view class='contacts_con_address'>
+        <image src="/images/icon/address@2x.png" mode="widthFix"></image>
+        <text>距离您{{detailsData.distinct}}</text> | 
+        <text bindtap="handleMap">查看地图</text>
+        <image src="/images/icon/go_back@2x.png" mode="widthFix" 
+          style="width:13rpx;margin:0 0 5rpx 10rpx;"></image>
+      </view>
+      <view class='contacts_con_view'>{{detailsData.nick_name}} {{detailsData.phone}}</view>
+      <text style='font-size: 26rpx;'>订单备注：{{detailsData.comment_by_user||''}}</text>
+    </view>
+  </view>
+  <!-- 商品明细 -->
+  <view class='contacts'>
+    <view class='contacts_title'>商品明细</view>
+    <view class='goods_con' wx:for="{{detailsData.comm_list}}" wx:key="index">
+      <view class='contacts_tiem' wx:if="{{item.delivery_date_num!=detailsData.comm_list[index-1]['delivery_date_num']}}">
+        <image src="/images/icon/address.png" mode="widthFix"></image>
+        <text>{{item.delivery_date}}  自提  {{item.delivery_duration}}</text>
+      </view>
+      <!-- 商品列表 -->
+      <view class='weui-flex' bindtap="activity" data-id="{{item.commodity_id}}">
+        <view class='goods_image'>
+          <image src="{{HOST}}{{item.thumbnail}}" mode="aspectFill"></image>
+        </view>
+        <view class='goods_details'>
+          <view class='goods_title'>{{item.commodities_name||''}}{{item.spec}}</view>
+          <view class="goods_refund" wx:if="{{item.after_status!=0}}">{{item.after_status==1?'审核中':item.after_status==2&&item.after_type!=2?'已同意':item.after_status==3?'已拒绝':item.after_type==2?'店长处理':item.after_status==4?'已取消':''}}X{{item.sale_num}}</view>
+          <view class='goods_information'>
+            <text class='information_price'>￥{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text>{{item.unit?'/'+item.unit:''}}</text>
+            <text class='prime_cost'>￥{{item.original_price||0}}</text>
+            <text class='information_num'>X{{item.num}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='goods_total'>
+      <view class='total_sum'>商品总额 <text>￥{{detailsData.comm_list_money}}</text></view>
+      <view class='goods_coupon' wx:if="{{detailsData.coupon_amount!=null}}">优惠券 <text>-￥{{detailsData.coupon_amount}}</text></view>
+      <view class='payment'>
+        实付总额 <text style="cursor: pointer">￥{{detailsData.price_whole}}<text style="font-size:27rpx;" wx:if="{{detailsData.price_small}}">.{{detailsData.price_small}}</text></text>
+      </view>
+    </view>
+  </view>
+   <!-- 订单信息 -->
+    <view class='contacts'>
+      <view class='contacts_title'>订单信息</view>
+      <view class='order_details'>
+        <view class='total_sum'>订单编号 <text>{{detailsData.order_id}}</text></view>
+        <view class='total_sum'>下单时间<text>{{detailsData.order_time}}</text></view>
+        <view class='total_sum' wx:if="{{detailsData.status!=0&&detailsData.status!=-2&&detailsData.status!=-1}}">支付时间
+          <text>{{detailsData.payment_time}}</text>
+        </view>
+        <view class='total_sum' wx:if="{{detailsData.status==4}}">自提时间
+          <text>{{detailsData.delivery_time||''}}</text>
+        </view>
+        <view class='total_sum' wx:if="{{detailsData.status!=0&&detailsData.status!=-2&&detailsData.status!=-1}}">支付方式 
+          <text>{{detailsData.pay_type==0?'代购金支付':detailsData.pay_type==1?'微信支付':'微信+代购金支付'}}</text>
+        </view>
+        <view class='total_sum' wx:else>支付方式 <text>—— ——</text></view>
+        <view class='total_sum'>订单状态 <text>{{detailsData.status==0?'待付款':detailsData.status==1?'已付款':detailsData.status==2||detailsData.status==3?'待自提':detailsData.status==-2?'已关闭':detailsData.status==-1?'已取消':'已自提'}}</text></view>
+      </view>
+    </view>
+</view>
+<view id='footer' wx:if="{{detailsData.status!=-1}}">
+  <navigator url='/pages/my/refund_details/index?order_id={{order_id}}' hover-class="none" wx:if="{{detailsData.status >= 5}}">
+    <button class='footer_service'>
+      售后详情
+    </button>
+  </navigator>
+  <navigator url='/pages/my/apply_refund/index?order_id={{order_id}}' hover-class="none" wx:if="{{detailsData.status==4}}">
+    <button class='footer_service'>
+      申请售后
+    </button>
+  </navigator>
+  <button class='footer_phone' wx:if="{{detailsData.status==0}}" bindtap="handlePayment">立即支付</button>
+  <!-- <button class='footer_phone' wx:if="{{detailsData.status==1}}">提醒尽快</button> -->
+  <button class='footer_pin' 
+    wx:if="{{detailsData.status==2||detailsData.status==3}}"
+    bindtap="handleMelt">确认自提</button>
+  <navigator 
+    wx:if="{{detailsData.status!=0&&detailsData.status!=-2}}"
+    url='/pages/my/main_order/index?order_id={{detailsData.order_id}}-0' 
+    hover-class="none">
+    <button class='footer_printing'>查看主订单</button>
+  </navigator>
+  <button class='footer_printing' 
+    wx:if="{{detailsData.status==0}}" 
+    data-id="{{detailsData.order_id}}"
+    bindtap="handleShopowner">取消订单</button>
+</view>

@@ -1,0 +1,95 @@
+{
+  "pages": [
+    "pages/tarbar/home/index",
+    "pages/tarbar/classify/index",
+    "pages/tarbar/my/index",
+    "pages/tarbar/shopping/index"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "为餐小栈",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#C3D939",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/tarbar/home/index",
+        "text": "首页",
+        "iconPath": "images/tarbar/home.png",
+        "selectedIconPath": "images/tarbar/home-on.png"
+      },
+      {
+        "pagePath": "pages/tarbar/classify/index",
+        "text": "分类",
+        "iconPath": "images/tarbar/classify.png",
+        "selectedIconPath": "images/tarbar/classify-on.png"
+      },
+      {
+        "pagePath": "pages/tarbar/shopping/index",
+        "text": "购物车",
+        "iconPath": "images/tarbar/shopping.png",
+        "selectedIconPath": "images/tarbar/shopping-on.png"
+      },
+      {
+        "pagePath": "pages/tarbar/my/index",
+        "text": "我的",
+        "iconPath": "images/tarbar/my.png",
+        "selectedIconPath": "images/tarbar/my-on.png"
+      }
+    ]
+  },
+  "subPackages": [
+    {
+      "root": "pages/common",
+      "pages": [
+        "location/index"
+      ]
+    },
+    {
+      "root": "pages/home",
+      "pages": [
+        "goods_details/index",
+        "payment/index",
+        "seckill/index",
+        "hot_sale/index",
+        "search/index",
+        "carry_see/index",
+        "carry_select/index",
+        "notice/index"
+      ]
+    },
+    {
+      "root": "pages/my",
+      "pages": [
+        "article_details/index",
+        "confirm_order/index",
+        "apply_refund/index",
+        "main_order/index",
+        "often/index",
+        "feed_back_two/index",
+        "feed_back/index",
+        "system/index",
+        "discount/index",
+        "coupon/index",
+        "gold/index",
+        "refund_details/index",
+        "order_details/index",
+        "order/index"
+      ]
+    }
+   
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

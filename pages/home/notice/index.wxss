@@ -1,0 +1,18 @@
+/* pages/home/notice/index.wxss */
+page{
+  background-color: #ffffff;
+}
+.notice{
+  padding: 0 30rpx 50rpx;
+}
+.notice-title{
+  font-size: 42rpx;
+  color: #333333;
+  padding: 50rpx 0 40rpx 0;
+}
+.notice-content{
+  font-size: 26rpx;
+  color: #656565;
+  line-height:40rpx;
+  margin:0 0 30rpx 0;
+}

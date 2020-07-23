@@ -1,0 +1,29 @@
+/* pages/common/location/index.wxss */
+.location{
+  text-align: center;
+  font-size:26rpx;
+  line-height:40rpx;
+  color:#666;
+  background-color:#fff;
+  height:100%;
+  padding:0 12.4%;
+}
+.logo{
+  width:192rpx;
+  padding:173rpx 0 83rpx;
+  margin:0 auto;
+}
+.logo image:last-of-type{
+  padding:35rpx 0 0;
+}
+.location-title{
+  color:#EF291A;
+  font-size:30rpx;
+  margin:0 0 27rpx 0;
+}
+.weui-btn{
+  margin:82rpx 0 0;
+  font-size:30rpx;
+  background-color:#C3DB22;
+  padding:30rpx 0;
+}

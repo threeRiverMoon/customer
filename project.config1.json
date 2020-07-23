@@ -1,0 +1,241 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.7.7",
+	"appid": "wx7114b749f4b1bb68",
+	"projectname": "student",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "实名认证",
+					"pathName": "pages/my/auth/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "地址列表",
+					"pathName": "pages/my/address/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加地址",
+					"pathName": "pages/my/addressForm/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发布需求",
+					"pathName": "pages/home/publish/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "补充订单信息",
+					"pathName": "pages/home/publishSupply/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "教师详情",
+					"pathName": "pages/home/teachersDetail/index",
+					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "心仪老师",
+					"pathName": "pages/my/teachers/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的小孩",
+					"pathName": "pages/my/childs/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加小孩信息",
+					"pathName": "pages/my/childsForm/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券列表",
+					"pathName": "pages/my/coupons/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "设置",
+					"pathName": "pages/my/set/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提现密码设置",
+					"pathName": "pages/my/withdrawalPassword/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请好友",
+					"pathName": "pages/my/invite/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "帮助中心",
+					"pathName": "pages/my/help/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提现",
+					"pathName": "pages/my/wallet/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提现记录",
+					"pathName": "pages/my/withdrawal/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "收入明细",
+					"pathName": "pages/my/income/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消费记录",
+					"pathName": "pages/my/consume/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "订单详情",
+					"pathName": "pages/order/detail/index",
+					"query": "id=15",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "支付",
+					"pathName": "pages/order/pay/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 20,
+					"name": "查看课表",
+					"pathName": "pages/order/timetable/index",
+					"query": "id=15",
+					"scene": null
+				},
+				{
+					"id": 21,
+					"name": "排课确认",
+					"pathName": "pages/order/schedule/index",
+					"query": "id=15&state=6",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "教案详情",
+					"pathName": "pages/order/plan/index",
+					"query": "id=4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "课后反馈",
+					"pathName": "pages/order/feedback/index",
+					"query": "id=4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "课程详情",
+					"pathName": "pages/order/lession/index",
+					"query": "id=4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消息列表",
+					"pathName": "pages/my/message/index",
+					"scene": null
+				}
+			]
+		}
+	}
+}

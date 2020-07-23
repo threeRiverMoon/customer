@@ -1,0 +1,66 @@
+<view id='container'>
+
+  <!-- 联系人信息 -->
+  <view class='contacts'>
+    <view class='contacts_title'>联系人信息</view>
+    <view class='contacts_con'>
+      <view class='contacts_con_view'>{{detailsData.store_name}}</view>
+      <text>提货地址：{{detailsData.province}}{{detailsData.region}}{{detailsData.area}}{{detailsData.detail}}</text>
+      <view class='contacts_con_address'>
+        <image src="/images/icon/address@2x.png" mode="widthFix"></image>
+        <text>距离您{{detailsData.distinct}}</text> | 
+        <text bindtap="handleMap">查看地图</text>
+        <image src="/images/icon/go_back@2x.png" mode="widthFix" 
+          style="width:13rpx;margin:0 0 5rpx 10rpx;"></image>
+      </view>
+      <view class='contacts_con_view'>{{detailsData.nick_name}} {{detailsData.phone}}</view>
+      <text style='font-size: 26rpx;'>订单备注：{{detailsData.comment_by_user||''}}</text>
+    </view>
+  </view>
+  <!-- 商品明细 -->
+  <view class='contacts'>
+    <view class='contacts_title'>商品明细</view>
+    <view class='goods_con' wx:for="{{detailsData.comm_list}}" wx:key="index">
+      <view class='contacts_tiem' wx:if="{{item.delivery_date_num!=detailsData.comm_list[index-1]['delivery_date_num']}}">
+        <image src="/images/icon/address.png" mode="widthFix"></image>
+        <text>{{item.delivery_date}}  自提  {{item.delivery_duration}}</text>
+      </view>
+      <!-- 商品列表 -->
+      <view class='weui-flex' >
+        <view class='goods_image'>
+          <image src="{{HOST}}{{item.thumbnail}}" mode="aspectFill"></image>
+        </view>
+        <view class='goods_details'>
+          <view class='goods_title'>{{item.commodities_name}}</view>
+          <!-- <view class="goods_refund" wx:if="{{item.after_status!=0}}"> {{item.after_status==1?'审核中':item.after_status==2&&item.after_type!=2?'已同意':item.after_status==3?'已拒绝':item.after_type==2?'店长处理':item.after_status==4?'已取消':''}}X{{item.sale_num}}</view> -->
+          <view class="goods_refund" wx:if="{{item.o_status_text!=''}}">
+         {{item.o_status_text}}X{{item.num}}</view>
+          <view class='goods_information'>
+            <text class='information_price'>￥{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text>{{item.unit?'/'+item.unit:''}}</text>
+            <text class='prime_cost'>￥{{item.original_price}}</text>
+            <text class='information_num'>X{{item.num}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='goods_total'>
+      <view class='total_sum'>商品总额 <text>￥{{detailsData.comm_list_money}}</text></view>
+      <view class='goods_coupon' wx:if="{{detailsData.coupon_amount!=null}}">优惠券 <text>-￥{{detailsData.coupon_amount}}</text></view>
+      <view class='payment'>
+        实付总额 <text>￥{{detailsData.price_whole}}<text style="font-size:27rpx;" wx:if="{{detailsData.price_small}}">.{{detailsData.price_small}}</text></text>
+      </view>
+    </view>
+  </view>
+   <!-- 订单信息 -->
+    <view class='contacts'>
+      <view class='contacts_title'>订单信息</view>
+      <view class='order_details'>
+        <view class='total_sum'>订单编号 <text>{{detailsData.order_id}}</text></view>
+        <view class='total_sum'>下单时间<text>{{detailsData.order_time}}</text></view>
+        <view class='total_sum' wx:if="{{detailsData.status!=0&&detailsData.status!=-2}}">支付时间<text>{{detailsData.payment_time}}</text></view>
+        <view class='total_sum'>支付方式 
+          <text>{{detailsData.pay_type==0?'代购金支付':detailsData.pay_type==1?'微信支付':'微信+代购金支付'}}</text>
+        </view>
+      </view>
+    </view>
+</view>

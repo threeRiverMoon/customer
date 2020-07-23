@@ -1,0 +1,28 @@
+<!--pages/my/coupon/index.wxml-->
+<view id='coupon'>
+  <block wx:if="{{list.length!=0}}">
+    <view class='coupon_list weui-flex' 
+      wx:for="{{list}}" 
+      wx:key="item.id">
+      <image src="/images/icon/coupons@2x.png"></image>
+      <view class='coupon_left weui-flex'>
+        <view class='coupon_price'>￥<text>{{item.spec[1]||0}}</text></view>
+        <view class='coupon_condition'>满{{item.spec[0]}}元可用</view>
+      </view>
+      <view class='coupon_con weui-flex'>
+        <view>{{item.name}}</view>
+        <text>{{item.effective_time}} ~ {{item.invalidate_time}}</text>
+      </view>
+      <view class='coupon_right weui-flex' bindtap="handleGive" data-id="{{item.id}}">
+        领取
+      </view>
+    </view>
+  </block>
+  <!-- 空数据 -->
+  <view class="nothing" style="color:#3D4244;" wx:else>
+    <image src='/images/icon/06.gif' mode='widthFix'></image>
+    <view>抱歉，暂无优惠券可领取~</view>
+  </view>
+</view>
+
+

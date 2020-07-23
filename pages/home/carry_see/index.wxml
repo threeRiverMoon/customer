@@ -1,0 +1,10 @@
+<!--pages/home/carry_see/index.wxml-->
+<view id='carry_see'>
+  <map class='map' longitude="{{longitude}}" latitude="{{latitude}}" show-location markers="{{markers}}"></map>
+  <view class='navigation weui-flex'>
+    <image src='/images/icon/location_hui.png' mode='widthFix'></image>
+    <view class='address'>{{store.province}}{{store.region}}{{store.detail}}</view>
+    <view class='navigation_buttom' bindtap='setNavigation'>导航</view>
+  </view>
+</view>
+

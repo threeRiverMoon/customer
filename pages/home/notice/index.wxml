@@ -1,0 +1,8 @@
+<!--pages/home/notice/index.wxml-->
+<view class="notice">
+  <view class="notice-title">{{notice.brief}}</view>
+  <view 
+    wx:for="{{notice.content}}" 
+    wx:key="*this"
+    class="notice-content">{{item}}</view>
+</view>

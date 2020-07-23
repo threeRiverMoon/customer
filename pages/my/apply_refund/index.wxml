@@ -1,0 +1,114 @@
+<view id='container'>
+
+   <!-- 联系人信息 -->
+  <view class='contacts'>
+    <view class='contacts_title'>联系人信息</view>
+    <view class='contacts_con'>
+      <view class='contacts_con_view'>{{detailsData.store_name}}</view>
+      <text>提货地址：{{detailsData.province}}{{detailsData.region}}{{detailsData.area}}{{detailsData.detail}}</text>
+      <view class='contacts_con_address'>
+        <image src="/images/icon/address@2x.png" mode="widthFix"></image>
+        <text>距离您{{detailsData.distinct}}</text> | 
+        <text bindtap="handleMap">查看地图</text>
+        <image src="/images/icon/go_back@2x.png" mode="widthFix" 
+          style="width:13rpx;margin:0 0 5rpx 10rpx;"></image>
+      </view>
+      <view class='contacts_con_view'>{{detailsData.nick_name}} {{detailsData.phone}}</view>
+      <text style='font-size: 26rpx;'>订单备注：{{detailsData.comment_by_user||''}}</text>
+    </view>
+  </view>
+  
+  <!-- 商品明细 -->
+  <view class='contacts'>
+    <view class='contacts_title'>商品明细</view>
+    <view class='goods_con' wx:for="{{detailsData.comm_list}}" >
+      <view class='contacts_tiem'>
+        <image src="/images/icon/address.png" mode="widthFix"></image>
+        <text wx:if="item.delivery_date_num>detailsData.comm_list[index-1]['delivery_date_num']">{{item.delivery_date}}  自提  {{item.delivery_duration}}</text>
+      </view>
+      <!-- 商品列表 -->
+      <view class='weui-flex'>
+        <view class='goods_image'>
+          <image src="{{HOST}}{{item.thumbnail}}" mode="aspectFill"></image>
+        </view>
+        <view class='goods_details'>
+          <view class='goods_title'>{{item.commodities_name}}</view>
+          <view class='goods_refund weui-flex' wx:if="{{item.sale_ok == 1}}">
+            <view  data-index="{{index}}" bindtap="bindJian">-</view>
+            <input type="number" value="{{item.nums}}" 
+              data-index="{{index}}" disabled="disabled">
+            </input>
+            <view data-index="{{index}}" bindtap="bindJia">+</view>
+          </view>
+          <view class='goods_refunds' wx:if="{{item.sale_ok == 0}}">该商品已过售后期</view>
+          <view class='goods_information'>
+            <text class='information_price'>￥{{item.price_whole}}<text style="font-size:24rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text>{{item.unit?'/'+item.unit:''}}</text>
+            <text class='prime_cost'>￥{{item.original_price}}</text>
+            <text class='information_num'>X{{item.num}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='goods_total'>
+      <view class='total_sum'>商品总额 <text>￥{{detailsData.comm_list_money}}</text></view>
+      <view class='goods_coupon' wx:if="{{detailsData.coupon_amount}}">优惠券 <text>￥{{detailsData.coupon_amount}}</text></view>
+      <view class='goods_coupon'>实付总额 <text>￥{{detailsData.price_whole}}<text style="font-size:24rpx;" wx:if="{{detailsData.price_small}}">.{{detailsData.price_small}}</text></text></view>
+      <view class='goods_coupon'>退款数量 <text>{{num}}</text></view>
+      <view class='goods_coupon'>退款金额 <text>￥{{all_sale_amount||0}}</text></view>
+      <view class='goods_coupon'>
+        优惠券失效 <text>￥{{lost_coupon_amount||0}}</text>
+      </view>
+      <view class='payment'>
+        申请退款金额<text>￥{{money}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 售后说明备注 -->
+  <view class="contacts reason weui-flex">
+    <text>售后备注：</text>
+    <input placeholder="请输入售后备注" maxlength="20" value="{{refund_reason}}" bindinput="handleRefundReason"></input>
+  </view>
+   <!-- 订单信息 -->
+  <view class='contacts'>
+     <view class='contacts'>
+      <view class='contacts_title'>订单信息</view>
+      <view class='order_details'>
+        <view class='total_sum'>订单编号 <text>{{detailsData.order_id}}</text></view>
+        <view class='total_sum'>下单时间<text>{{detailsData.order_time}}</text></view>
+        <view class='total_sum'>支付时间<text>{{detailsData.payment_time}}</text></view>
+        <view class='total_sum'>支付方式 
+          <text>{{detailsData.pay_type==0?'代购金支付':detailsData.pay_type==1?'微信支付':'微信+代购金支付'}}</text>
+        </view>
+        <view class='total_sum'>订单状态 <text>已自提</text></view>
+      </view>
+    </view>
+  </view>  
+</view>
+<!-- 操作块 -->
+<view id='footer'>
+  <button class='footer_pin' data-id='1' bindtap="handleConfirm">确认申请</button>
+  <button class='footer_printing' data-id='1' bindtap="handleCancel">取消申请</button>
+</view>
+
+<!-- 弹窗 申请退款 -->
+<view id='mask' wx:if='{{confirm==1}}'>
+  <view class='mask_con' style='padding:0;'>
+    <view style='padding:40rpx 0;'>温馨提示</view>
+    <text>申请退款的商品需要审核请您稍等。</text>
+    <view class='mask_inquiry'>
+      <view class='mask_cancel' data-id='0' bindtap="handleConfirm">取消</view>
+      <view class='mask_confirm' data-id='2' bindtap="handleConfirm">确认</view>
+    </view>
+  </view>
+</view>
+<!-- 弹窗 取消申请退款 -->
+<view id='mask' wx:if='{{cancel==1}}'>
+  <view class='mask_con' style='padding:0;'>
+    <view style='padding:40rpx 0;'>温馨提示</view>
+    <text>是否确认取消退款申请？</text>
+    <view class='mask_inquiry'>
+      <view class='mask_cancel' data-id='0' bindtap="handleCancel">取消</view>
+      <view class='mask_confirm' data-id='2' bindtap="handleCancel">确认</view>
+    </view>
+  </view>
+</view>

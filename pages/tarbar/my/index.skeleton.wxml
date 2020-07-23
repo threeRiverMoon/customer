@@ -1,0 +1,133 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/7/16 下午10:39:59 
+使用方法：
+在 pages/tarbar/my/index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 pages/tarbar/my/index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view id="my">
+      <view class="nav-bar" style="height:60px;">
+        <view class="nav-bar_title sk-transparent sk-text-28-1250-315 sk-text" style="height: 32px; min-height: 32px; line-height: 32px; left: 10px; right: 10px; bottom: 4px; background-position-x: 50%;">
+          为餐小栈
+        </view>
+      </view>
+      <view class="header" style="margin-top:60px;">
+        <image class="bg sk-image" mode="widthFix" style="height: 130.5px;">
+        </image>
+        <button class="weui-flex header-hd sk-transparent sk-button sk-pseudo sk-pseudo-circle" hover-class="none" open-type="getPhoneNumber">
+          获取手机号，同步全渠道订单和优惠券
+          <text class="sk-transparent sk-text-20-4545-453 sk-text" style="border: none; background-position-x: 50%;">
+            登录
+          </text>
+        </button>
+      </view>
+      <view class="main">
+        <view class="muser common">
+          <view class="muser-hd weui-flex">
+            <view class="muser-hd_avatar">
+              <image class="sk-image">
+              </image>
+            </view>
+            <view class="muser-hd_name sk-transparent sk-text-18-7500-155 sk-text">
+              马裕金
+            </view>
+          </view>
+          <view class="muser-bd weui-flex">
+            <navigator class="muser-bd-cell sk-pseudo sk-pseudo-circle" hover-class="none">
+              <view class="sk-transparent sk-text-18-7500-279 sk-text" style="background-position-x: 50%;">
+                代购金
+              </view>
+              <view class="muser-bd-cell_price sk-transparent sk-text-18-7500-890 sk-text" style="background-position-x: 50%;">
+                0
+              </view>
+            </navigator>
+            <navigator class="muser-bd-cell sk-pseudo sk-pseudo-circle" hover-class="none">
+              <view class="sk-transparent sk-text-18-7500-26 sk-text" style="background-position-x: 50%;">
+                优惠券
+              </view>
+              <view class="muser-bd-cell_price sk-transparent sk-text-18-7500-967 sk-text" style="background-position-x: 50%;">
+                0
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="morder common">
+          <navigator class="morder-hd weui-flex" hover-class="none" style="border: none;">
+            <view class="morder-hd_title sk-transparent sk-text-18-7500-487 sk-text">
+              我的订单
+            </view>
+            <view class="weui-cell_access">
+              <view class="weui-cell__ft common-more sk-transparent sk-text-18-7500-837 sk-text sk-pseudo sk-pseudo-circle" style="background-position-x: 100%;">
+                查看全部
+              </view>
+            </view>
+          </navigator>
+          <view class="morder-bd weui-flex">
+            <navigator class="morder-bd-cell" hover-class="none">
+              <image mode="widthFix" style="height: 23px;" class="sk-image">
+              </image>
+              <view class="sk-transparent sk-text-18-7500-266 sk-text" style="background-position-x: 50%;">
+                待付款
+              </view>
+            </navigator>
+            <navigator class="morder-bd-cell" hover-class="none">
+              <image mode="widthFix" style="height: 23px;" class="sk-image">
+              </image>
+              <view class="morder-bd-cell__title sk-transparent sk-text-18-7500-141 sk-text" style="background-position-x: 50%;">
+                已付款
+              </view>
+            </navigator>
+            <navigator class="morder-bd-cell" hover-class="none">
+              <image mode="widthFix" style="height: 23px;" class="sk-image">
+              </image>
+              <view class="morder-bd-cell__title sk-transparent sk-text-18-7500-726 sk-text" style="background-position-x: 50%;">
+                待自提
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="mnav common">
+          <navigator class="weui-cell sk-pseudo sk-pseudo-circle" hover-class="none" style="border: none;">
+            <view class="weui-cell__bd sk-transparent sk-text-18-7500-322 sk-text">
+              领券中心
+            </view>
+            <view class="weui-cell_access">
+              <view class="weui-cell__ft sk-pseudo sk-pseudo-circle">
+              </view>
+            </view>
+          </navigator>
+          <navigator class="weui-cell sk-pseudo sk-pseudo-circle" hover-class="none" style="border: none;">
+            <view class="weui-cell__bd sk-transparent sk-text-18-7500-879 sk-text">
+              设置
+            </view>
+            <view class="weui-cell_access">
+              <view class="weui-cell__ft sk-pseudo sk-pseudo-circle">
+              </view>
+            </view>
+          </navigator>
+          <navigator class="weui-cell sk-pseudo sk-pseudo-circle" hover-class="none" style="border: none;">
+            <view class="weui-cell__bd sk-transparent sk-text-18-7500-34 sk-text">
+              关于为餐小栈
+            </view>
+            <view class="weui-cell_access">
+              <view class="weui-cell__ft sk-pseudo sk-pseudo-circle">
+              </view>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

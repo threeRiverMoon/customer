@@ -1,0 +1,67 @@
+<!--pages/home/html/feed_back.wxml-->
+<view class="feedback">
+  <view class="feedback-main">
+    <view class="feedback-main_title">意见反馈描述</view>
+    <view class="feedback-textarea">
+      <textarea 
+        class="weui-textarea"
+        placeholder='请描述您需要反馈的问题，我们将尽快解决' 
+        maxlength='500' 
+        bindinput='bindInput' 
+        value="{{content}}" 
+        data-name="content">
+      </textarea>
+      <view class="upload weui-flex">
+        <view 
+          wx:for="{{imgs}}" 
+          wx:key="*this" 
+          class="upload-item">
+          <icon 
+            type="cancel" 
+            size="20" 
+            data-index="{{index}}"
+            bindtap="handleDel"
+            color="#C3D939"/>
+          <image 
+            class="upload-item_image"
+            bindtap="previewImage" 
+            data-src="{{HOST}}{{item}}"
+            src='{{HOST}}{{item}}'
+            mode="aspectFill"></image>
+        </view>
+        <view 
+          wx:if="{{imgs.length<3}}"
+          class="upload-item weui-flex"
+          bindtap='chooseImage'>
+          <image 
+            class="upload-icon"
+            src='/images/icon/xiangji.png' 
+            mode='widthFix'></image>
+        </view>
+      </view>
+      <view class="number">{{num}}/500</view>
+    </view>
+  </view>
+  <view class="weui-cells">
+    <view class="weui-cell">
+      <view class="weui-cell__hd">手机号:</view> 
+      <view class="weui-cell__bd">
+        <input
+          class="weui-input"
+          type="number"
+          maxlength='11'
+          data-name="phone"
+          value="{{phone}}"
+          bindinput='bindInput' 
+          placeholder="请输入手机号"/>
+      </view>
+    </view>
+  </view>
+  <view class="feedback-btn">
+    <button 
+      type="primary" 
+      hover-class="none"
+      bindtap="handleConfirm">提交反馈</button>
+  </view>
+</view>
+

@@ -1,0 +1,4 @@
+<template name="edition">
+  <view>为餐小栈小程序</view>
+    <view>版本号:1.0.101.1</view>
+</template>

@@ -1,0 +1,447 @@
+<!--pages/tarbar/home/index.wxml 首页-->
+<!-- <view class="weui-navbar weui-navbar-scroll" wx:if="{{top==1}}">
+  <view wx:for="{{tas}}" wx:key="{{index}}" class="weui-navbar__item" bindtap="bindtas" id="{{index}}" >
+    <view class="weui-navbar__title">{{item.name}}{{item.spec}}</view>
+        <text class="weui-navbar__title weui-bar__item {{tasIndex == index?'weui-bar__item_on':''}}">{{item.note}}</text>
+  </view>
+</view> -->
+<view class="home">
+  <view 
+    class="nav-bar {{isScroll ? 'on' : ''}}" 
+    style="height:{{navBarHeight}}px;">
+    <view class="nav-bar_title" 
+      style="height:{{menuHeight}}px; min-height:{{menuHeight}}px; line-height:{{ menuHeight}}px; left:30rpx; right:{{menuRight}}px; bottom:{{menuBotton-2}}px;">
+      <navigator 
+        style="height:{{menuHeight}}px; "
+        url='/pages/home/carry_select/index' 
+        hover-class="none" 
+        class='location weui-flex'>
+        <image class='location-icon' src='/images/icon/location.png' mode="widthFix"></image>
+        <text>{{store_name}}</text>
+        <view class="location-arrow"></view>
+      </navigator>
+    </view>
+  </view>
+  <view class='header-wrap' style="margin-top:{{navBarHeight}}px;">
+    <view class="header">
+      <navigator 
+        url='/pages/home/search/index?text={{search_text}}' 
+        hover-class="none" 
+        class='search weui-flex'>
+        <image src='/images/icon/search@2x.png' mode="widthFix"></image>
+        <view>{{search_text || '搜索为餐小栈有机蔬菜'}}</view>
+      </navigator>
+      <!-- 公告 -->
+      <view class='notice weui-flex'>
+        <view class='notice_img'>
+          <image src='/images/icon/notice.png' mode="widthFix"></image>
+        </view>
+        <swiper 
+          class="notice_box" 
+          vertical="true" 
+          autoplay="true" 
+          circular="true" 
+          interval="5000">
+          <swiper-item wx:for="{{notice}}" wx:key="id" data-id="{{item.id}}" bindtap="notice">
+            {{item.brief}}
+          </swiper-item>
+        </swiper>
+      </view>
+      <swiper 
+        style="height:240rpx"
+        indicator-dots="true"
+        autoplay="true" 
+        indicator-active-color="#C3D939">
+        <swiper-item wx:for="{{banners.images}}" wx:key="index">
+          <view class="swiper-item weui-flex" bindtap="handleBanner">
+            <image src='{{HOST}}{{item}}' mode="aspectFill"></image>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+
+  <view class="main">
+    <block wx:for="{{activityList}}" wx:key="id">
+      <view wx:if="{{item.type==2 && item.goods_list}}" class="common">
+        <view class="common-header">
+          <mp-cell 
+            link
+            url="/pages/home/seckill/index?name={{item.name}}&type={{item.type}}&id={{item.id}}"
+            value="{{item.name}}" 
+            footer="{{item.enter}}">
+          </mp-cell>
+        </view>
+        <view class="common-list">
+          <navigator 
+            wx:for="{{item.goods_list}}"
+            class="weui-media-box weui-media-box_appmsg" 
+            hover-class="none">
+            <view class="weui-media-box__hd">
+              <image class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==" alt></image>
+            </view>
+            <view class="weui-media-box__bd">
+              <h4 class="weui-media-box__title">标题一</h4>
+              <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
+            </view>
+            <text class="weui-media-box__ft">22</text>
+          </navigator>
+        </view>
+      </view>
+    </block>
+
+    <!-- 打折促销 -->
+    <view class="seckill seckill-type{{item.type}}" wx:for="{{activityList}}" 
+      wx:key="{{item.id}}" wx:if="{{item.goods_list!=''}}">
+      <block wx:if="{{item.type==2}}">
+        <view class='seckill_title'>
+          <view class="seckill_name seckill_name{{item.type}}">{{item.name}}</view>
+          <navigator class='seckill_title_more weui-flex'
+            url='/pages/home/seckill/index?&name={{item.name}}&button={{item.text_of_button}}&type={{item.type}}&activity_id={{item.id}}'
+            hover-class="none">{{item.enter}} <image src="/images/icon/right.png" mode="widthFix"></image>
+          </navigator>
+        </view>
+        <!-- 打折促销内容 -->
+        <view class='discount_con weui-flex'>
+          <navigator 
+            class='seckill_list2' 
+            wx:for="{{item.goods_list}}" 
+            wx:for-item="items"
+            wx:for-index="index1"
+            wx:key="{{items.id}}"
+            url="/pages/home/goods_details/index?id={{items.id}}" 
+            hover-class="none"
+            wx:if="{{index1<4}}">
+            <view class='seckill_img discount_img'>
+              <image src="{{items.thumbnail?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120':'/images/icon/load3.png'}}" mode="aspectFill"></image>
+            </view>
+            <view class='discount_title' >{{items.number_of_buyers}}人买过</view>
+            <view class="discount_buttom weui-flex">
+              <!-- <image src="/images/icon/discount.png"></image> -->
+              <view wx:if="{{items.original_price=='0.00'||items.original_price==''}}"></view>
+              <view class="discount_rate" wx:if="{{items.original_price!='0.00'&&items.original_price!=''}}">{{items.discount_rate}}折</view>
+              <!-- <view><text>￥</text>{{items.price}}{{items.unit?'/'+items.unit:''}}</view> -->
+              <view style="font-weight: bold;font-size:20rpx; {{items.original_price!='0.00'&&items.original_price!=''?'':'text-align:left;'}}">￥<text>{{items.price_whole}}</text><text wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+            </view>
+          </navigator>
+        </view>
+      </block>
+      <block wx:elif="{{item.type==1}}">
+        <view class='seckill_title'>
+          <view class="seckill_name seckill_name{{item.type}}">{{item.name}}</view>
+          <navigator class='seckill_title_more weui-flex'
+            url='/pages/home/seckill/index?&name={{item.name}}&button={{item.text_of_button}}&type={{item.type}}&activity_id={{item.id}}' 
+            hover-class="none">{{item.enter}}<image src="/images/icon/right.png" mode="widthFix"></image>
+          </navigator>
+        </view>
+        <!-- 限时秒杀内容 -->
+        <view class='seckill_con seckill_con{{item.type}} weui-flex'>
+          <navigator 
+            class='seckill_list seckill_list{{item.type}}' 
+            wx:for="{{item.goods_list}}" 
+            wx:for-item="items"
+            wx:for-index="index1"
+            wx:key="{{items.id}}"
+            url="/pages/home/goods_details/index?id={{items.id}}" 
+            hover-class="none"
+            wx:if="{{index1<4}}">
+            <view class='seckill_img'>
+              <image src="{{items.thumbnail?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120':'/images/icon/load2.png'}}" mode="aspectFill"></image>
+              <view class="special" wx:if="{{items.can_order==1&&items.av_status==0}}">
+                已售罄
+              </view>
+              <view class="special" wx:elif="{{items.av_status==1}}">
+                即将开始
+              </view>
+            </view>
+            <view class='seckill_list_title'>{{items.name}}{{items.spec}}</view>
+            <view class='seckill_buttom'>
+              <!-- <text style="color:#000000;">￥{{items.price}}{{items.unit?'/'+items.unit:''}}</text> -->
+              <view>￥<text class="seckill_buttom-price">{{items.price_whole}}</text><text wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+              <view class="seckill_buttom-original">￥{{items.original_price}}</view>
+            </view>
+            <view 
+              class='like_shopping'
+              wx:if="{{(items.can_order==1&&items.av_status==0)||items.av_status==1}}"
+              style="position:absolute;bottom:16rpx;right:20rpx;">
+              <view 
+                wx:if="{{items.shopping_cart_num>=1}}"
+                class="weui-badge" style="font-size:19rpx;">{{items.shopping_cart_num}}</view>
+              <image src='/images/icon/carts.png' mode="widthFix"></image>
+            </view>
+            <view 
+                class='like_shopping'
+                data-type="{{index1}}"
+                data-index="{{index}}"
+                data-id="{{items.id}}"
+                catchtap="bindJia"
+                wx:elif="{{items.deliver_date==''}}"
+                style="position:absolute;bottom:16rpx;right:15rpx;">
+                <view 
+                  wx:if="{{items.shopping_cart_num>=1}}"
+                  class="weui-badge" style="font-size:19rpx;">{{items.shopping_cart_num}}</view>
+                <image src='/images/icon/cart2.png' mode="widthFix"></image>
+              </view>
+            <view 
+                class='like_shopping'
+                data-type="{{index1}}"
+                data-index="{{index}}"
+                data-id="1" 
+                data-name="activityList" 
+                catchtap="handleScreen"
+                wx:else
+                style="position:absolute;bottom:16rpx;right:20rpx;">
+                <view 
+                  wx:if="{{items.shopping_cart_num>=1}}"
+                  class="weui-badge" style="font-size:19rpx;">{{items.shopping_cart_num}}</view>
+                <image src='/images/icon/cart2.png' mode="widthFix"></image>
+              </view>
+          </navigator>
+        </view>
+      </block>  
+      <block wx:elif="{{item.type==3}}">
+        <view class='seckill_title'>
+          <view class="seckill_name seckill_name{{item.type}}">{{item.name}}</view>
+          <navigator class='seckill_title_more weui-flex'
+            url='/pages/home/seckill/index?&name={{item.name}}&button={{item.text_of_button}}&type={{item.type}}&activity_id={{item.id}}' 
+            hover-class="none">{{item.enter}}<image src="/images/icon/right.png" mode="widthFix"></image>
+          </navigator>
+        </view>
+        <!-- 限时秒杀内容 -->
+        <view 
+          class="activity_list weui-flex" 
+          wx:for="{{item.goods_list}}" 
+          wx:for-item="items" 
+          wx:for-index="index1"
+          wx:key="{{items.id}}"
+          wx:if="{{index1<3}}">
+          <view class='list_left weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <image src="{{items.thumbnail?HOST+items.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100':'/images/icon/load2.png'}}" mode="aspectFill" class="activity_img"></image>
+            <view class="special" wx:if="{{items.can_order==1&&items.av_status==0}}">
+              已售罄
+            </view>
+            <view class="special" wx:elif="{{items.av_status==1}}">
+              即将开始
+            </view>
+          </view>
+          <view class='list_con weui-flex' bindtap="activity" data-id="{{items.id}}">
+            <view class='activity_list_title'>{{items.name}}{{items.spec}}</view>
+            <view class='activity_buttom'>
+              <view style="font-weight: bold;"><text style="font-size:23rpx;">￥</text>{{items.price_whole}}<text style="font-size:25rpx;" wx:if="{{items.price_small}}">.{{items.price_small}}</text></view>
+            </view>
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num==0||items.shopping_cart_num==''}}" >
+            <view class="weui-flex" style="flex-direction: column;align-items: flex-end;justify-content: flex-end;" 
+              wx:if="{{items.is_end_deliver!=1&&items.sell_out!=1&&items.t_sell_out!=1&&items.is_end_limited_discount_whole!=1}}">
+              <view class="seckill_right-time weui-flex" wx:if="{{items.end_time_of_time_limited_discount_whole!=null}}">
+                <view>{{items.fen}}</view>
+                <text>:</text>
+                <view>{{items.miao}}</view>
+                <text>:</text>
+                <view>{{items.micro}}</view>
+              </view>
+              <view 
+                class='buy buy1'
+                style="background: linear-gradient(90deg,#C3D939,#B4CB24);"
+                wx:if="{{items.av_status==1}}">即将开始</view>
+              <view 
+                data-index="{{index}}" 
+                data-type="{{index1}}" 
+                catchtap="bindJia" 
+                class='buy buy1'
+                wx:elif="{{items.deliver_date==''}}">{{item.text_of_button}}</view>
+                <view 
+                data-index="{{index}}" 
+                data-type="{{index1}}" 
+                data-name="activityList"
+                data-id="1"
+                catchtap="handleScreen" 
+                class='buy buy1'
+                wx:else>{{item.text_of_button}}</view>
+            </view>
+          </view>
+          <view class='list_right weui-flex' wx:if="{{items.shopping_cart_num>=1}}" >
+            <view class='goods_refund weui-flex' >
+              <image data-index="{{index}}" data-type="{{index1}}" catchtap="bindJian" wx:if="{{items.shopping_cart_num<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+              <image data-index="{{index}}" data-type="{{index1}}" catchtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+              <input type="number" data-type="{{index1}}" value="{{items.shopping_cart_num}}" 
+                data-index="{{index}}" disabled="disabled">
+              </input>
+              <block wx:if="{{items.deliver_date==''}}">
+                <image data-index="{{index}}" data-type="{{index1}}" catchtap="bindJia" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" data-type="{{index1}}" catchtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+              <block wx:else>
+                <image data-index="{{index}}" data-type="{{index1}}" data-id="1" data-name="activityList" catchtap="handleScreen" wx:if="{{items.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" data-type="{{index1}}" data-id="1" data-name="activityList" catchtap="handleScreen" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    
+    <!-- 几元封顶 -->
+    <!-- <view style="margin:20rpx 0 40rpx 0;border-radius: 10rpx;overflow: hidden;background-color:#ffffff">
+      <view class="weui-navbar weui-navbars">
+        <view wx:for="{{tas}}" wx:key="{{index}}" class="weui-navbar__item" bindtap="bindtas" id="{{index}}" >
+          <view class="weui-navbar__title">{{item.name}}</view>
+          <text class="weui-navbar__title weui-bar__item {{tasIndex == index?'weui-bar__item_on':''}}">{{item.note}}</text>
+        </view>
+      </view>
+      <block wx:if="{{capsSetList!=''}}">
+        <view class="activity_list weui-flex" wx:for="{{capsSetList}}" wx:key="{{item.id}}" wx:if="{{tasIndex<1}}">
+          <view class='list_left list_leftt weui-flex' bindtap="activity" data-id="{{item.id}}">
+            <image src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100'}}" mode="aspectFill" class="activity_img"></image>
+            <view class="special" wx:if="{{item.can_order==1&&item.av_status==0}}">
+              已售罄
+            </view>
+            <view class="special" wx:elif="{{item.av_status==1}}">
+              即将开始
+            </view>
+          </view>
+          <view class='list_con weui-flex' bindtap="activity" data-id="{{item.id}}">
+            <view class='activity_list_title' style="margin: 0;font-szie:32rpx;">{{item.name}}{{item.spec}}</view>
+            <view class='activity_tag'>
+              <view wx:if="{{item.purchas_limit_each_one_everyday!=0}}">
+                限{{item.purchas_limit_each_one_everyday}}份
+              </view>
+              <view wx:elif="{{item.purchas_limit_each_sum_everyday!=0}}">
+                限购{{item.purchas_limit_each_sum_everyday}}份
+              </view>
+              <view wx:if="{{index1===0&&item.tag_name!=''}}" wx:for="{{item.tag_name}}" wx:for-item="items" wx:for-index="index1">{{items}}</view>
+            </view>
+            <view class='activity_buttom price_hei' style="text-align: left;">
+              <view style="font-weight: bold;"><text style="font-size:23rpx;">￥</text>{{item.price_whole}}<text style="font-size:25rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+            </view>
+          </view>
+          <view class='list_right weui-flex'style="width: 170rpx;justify-content:center" wx:if="{{item.shopping_cart_num==0||item.shopping_cart_num==''}}">
+            <view style="margin: 50rpx 0 0 0">
+              <image src='/images/icon/carts.png' mode="widthFix" wx:if="{{(item.can_order==1&&item.av_status==0)||item.av_status==1}}"></image>
+              <image src='/images/icon/cart2.png' mode="widthFix" data-index="{{index}}" data-id="1" data-name="capsSetList" catchtap="handleScreen" wx:elif="{{item.deliver_date!=''}}"></image>
+              <image src='/images/icon/cart2.png' mode="widthFix" data-index="{{index}}" catchtap="bindJia" wx:else></image>
+            </view>
+          </view>
+          <view class='list_right weui-flex'style="width: 170rpx;justify-content:center" wx:if="{{item.shopping_cart_num>=1}}">
+            <view class='goods_refund weui-flex' wx:if="{{item.shopping_cart_num>=1}}">
+              <image data-index="{{index}}" catchtap="bindJian" wx:if="{{item.shopping_cart_num<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+              <image data-index="{{index}}" catchtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+              <input type="number" value="{{item.shopping_cart_num}}" 
+                data-index="{{index}}" disabled="disabled">
+              </input>
+              <block wx:if="{{item.deliver_date==''}}">
+                <image data-index="{{index}}" catchtap="bindJia" wx:if="{{item.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                <image data-index="{{index}}" catchtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+              <block wx:else>
+                <image data-index="{{index}}" data-id="1" data-name="capsSetList" catchtap="handleScreen" wx:if="{{item.shopping_cart_num>=99}}" src='/images/icon/cart.png' mode='widthFix'></image>
+                  <image data-index="{{index}}" data-id="1"  data-name="capsSetList" catchtap="handleScreen" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+              </block>
+            </view>
+          </view>
+        </view>
+        <view class="like_con weui-flex" wx:if="{{tasIndex==3||tasIndex==2||tasIndex==1}}">
+          <navigator 
+            url="/pages/home/goods_details/index?id={{item.id}}" 
+            hover-class="none" 
+            class="like_list" 
+            wx:for="{{capsSetList}}" 
+            wx:key="{{item.id}}">
+            <view class="like_img">
+              <image src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_120'}}" mode="aspectFill"></image>
+              <block wx:if="{{tasIndex==1 && index<3}}">
+                <image 
+                  src="/images/icon/{{index+1}}.png" 
+                  mode="widthFix" class="hots-img"></image>
+              </block>
+              <view class="special" wx:if="{{item.can_order==1&&item.av_status==0}}">
+                已售罄
+              </view>
+              <view class="special" wx:elif="{{item.av_status==1}}">
+                即将开始
+              </view>
+            </view>
+            <view class='like_list_title'>{{item.name}}{{item.spec}}</view>
+            <view class='like_buttom'>
+              <view style="font-weight: bold;">￥{{item.price_whole}}<text style="font-size:23rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+              <text>￥{{item.original_price}}</text>
+            </view>
+            <view 
+              class='like_shopping'
+              wx:if="{{(item.can_order==1&&item.av_status==0)||item.av_status==1}}">
+              <image src='/images/icon/carts.png' mode="widthFix"></image>
+            </view>
+            <view 
+              class='like_shopping'
+              data-id="{{item.id}}"
+              data-index="{{index}}"
+              catchtap="handleCart"
+              wx:elif="{{item.deliver_date==''}}">
+              <view 
+                wx:if="{{item.shopping_cart_num>0}}"
+                class="weui-badge">{{item.shopping_cart_num}}</view>
+              <image src='/images/icon/cart2.png' mode="widthFix"></image>
+            </view>
+            <view 
+              class='like_shopping'
+              data-id="1"
+              data-index="{{index}}"
+              data-name="capsSetList"
+              catchtap="handleScreen"
+              wx:else>
+              <view 
+                wx:if="{{item.shopping_cart_num>0}}"
+                class="weui-badge">{{item.shopping_cart_num}}</view>
+              <image src='/images/icon/cart2.png' mode="widthFix"></image>
+            </view>
+          </navigator>
+        </view>
+        <view class="buttom" bindtap="onBottom" wx:if="{{page_index < page_count}}">
+          查看更多  <image src="/images/icon/bottom.png"></image>
+        </view>
+      </block>
+      <view wx:else class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:none;">暂无数据</view>
+      </view>
+    </view> -->
+  </view>
+</view>
+
+<view id="mask" wx:if="{{storeState==1}}"></view>
+<view class="mask_con" wx:if="{{storeState==1}}">
+  <image src="/images/icon/dizhi.png" mode="widthFix" class="mask_con-image"></image>
+  <view class="mask_con-tis">以为您推荐最近门店，点击前往</view>
+  <view class="mask_con-store weui-flex" bindtap="store">
+    <view>{{store_name}}</view>
+    <view>{{distance}}km <image src="/images/icon/right-bai.png" mode="widthFix"></image></view>
+  </view>
+  <navigator url="/pages/home/carry_select/index" hover-class="none" class="mask_con-more">请选择更多门店 <image src="/images/icon/right.png" mode="widthFix"></image></navigator>
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>
+
+<button 
+  wx:if="{{token==''}}"
+  class="weui-btn login-wrap"
+  hover-class='none'
+  open-type="getUserInfo"
+  bindgetuserinfo="bindGetUserInfo">授权用户信息</button>
+
+

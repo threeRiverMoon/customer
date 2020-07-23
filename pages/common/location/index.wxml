@@ -1,0 +1,18 @@
+<!--pages/common/location/index.wxml-->
+<view class="location">
+  <view class="logo">
+    <image 
+      src="/images/icon/logo.png" 
+      mode="widthFix"></image>
+    <image 
+      src="/images/icon/LOGO2@2x.png" 
+      mode="widthFix"></image>
+  </view>
+  <view class="location-title">定位服务未开启</view>
+  <view>请在设置>微信>定位服务中开启[微信定位服务]，同时在小程序中开通[定位服务]。为餐小站知道您的位置才能提供更好的服务哦</view>
+  <button 
+    style="width:100%;"
+    class="weui-btn weui-btn_primary" 
+    hover-class="none"
+    bindtap="getLocations">获取小程序位置</button>
+</view>

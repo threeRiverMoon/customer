@@ -1,0 +1,171 @@
+<!-- 空数据 -->
+<view class="shoping">
+  <view wx:if="{{list==''&&emptyList==''}}" class="nothing empty">
+    购物车为空
+  </view>
+</view>
+
+<view id="whole">
+  <view id='container' >
+    <!-- 商品明细 -->
+    <view class='contacts'>
+      <!-- <view class='contacts_title'>商品明细</view> -->
+      <view class='goods_con' wx:for="{{list}}" wx:key="{{index1}}" wx:for-item="items" wx:for-index="index1" wx:if="{{items.list!=''}}">
+        <view class='contacts_tiem'>
+          <image src="/images/icon/address.png" mode="widthFix"></image>
+          <text wx:if="{{items.date!='失效'}}">{{items.date}} 自提</text>
+          <text wx:else>{{items.date}}</text>
+          <!-- <image style="float:right;margin:20rpx 0 0 0;" src="/images/icon/right.png" mode="widthFix"></image> -->
+        </view>
+        <!-- 商品列表 -->
+        <!-- <view class='' wx:for="{{list}}"> -->
+        <view class="weui-flex list item-box  {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-type="{{index1}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{items.list}}" wx:key="{{item.id}}" wx:for-item="item">
+          <view class="item">
+            <view style="padding-right:15rpx;">
+              <view bindtap="bindChecks" data-index="{{index}}" data-type="{{index1}}" wx:if="{{item.is_order==1}}"
+                class="check_select weui-flex {{item.check?'select':''}}">
+                <view wx:if='{{item.check}}'></view>
+              </view>
+              <view wx:else
+                class="check_select weui-flex {{item.check?'select':''}}" style="background-color:#f3f3f3;">
+                <view wx:if='{{item.check}}'></view>
+              </view>
+            </view>
+            <view class='goods_image' bindtap="activity" data-id="{{item.id}}">
+              <image src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100'}}" mode="aspectFill"></image>
+            </view>
+            <view class='goods_details' bindtap="activity" data-id="{{item.id}}">
+              <view class='goods_title'>{{item.name}}{{item.spec}}</view>
+              <view class='goods_information'>
+                <view class='information_price'>￥{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+                <text class='prime_cost'>￥{{item.original_price}}</text>
+              </view>
+              <view class="goods_tiem" wx:if="{{item.start_selling_time!=''&&items.date=='失效'}}"><text>{{item.start_selling_time}}-{{item.end_selling_time}}售卖</text></view>
+            </view>
+             <view class='goods_refund weui-flex' wx:if="{{item.is_order==1}}">
+             <image data-index="{{index}}" data-type="{{index1}}" bindtap="bindJian" wx:if="{{item.count<=1}}" src='/images/icon/-.png' mode='widthFix'></image>
+             <image data-index="{{index}}" data-type="{{index1}}" bindtap="bindJian" wx:else src='/images/icon/-2.png' mode='widthFix'></image>
+              <input type="number" value="{{item.count}}" 
+                data-index="{{index}}" data-type="{{index1}}" disabled="disabled">
+              </input>
+              <image data-index="{{index}}" data-type="{{index1}}" bindtap="bindJia" wx:if="{{item.count>=99||item.gounum}}" src='/images/icon/cart.png' mode='widthFix'></image>
+              <image data-index="{{index}}" data-type="{{index1}}" bindtap="bindJia" wx:else src='/images/icon/cart2.png' mode='widthFix'></image>
+            </view>
+            <view wx:else style="width:150rpx;color:#666666;border:none;margin: 50rpx 0 0 0;font-size:26rpx;">
+              {{item.error_msg}}
+            </view>
+          </view>
+          <view class="remove" data-id="{{item.id}}" data-ids="{{item.cart_id}}" bindtap="remove">删除</view>
+        </view>
+      </view>
+    </view>
+    <!-- 失效商品 -->
+    <view class="contacts" wx:if="{{emptyList!=''}}" style="padding:0 30rpx;">
+      <view class='contacts_title'>
+        <text>失效的商品</text>
+        <text bindtap="handleEmptyInvalidCartCommodity">清空失效商品</text>
+      </view>
+      <view class='goods_con' >
+        <!-- 商品列表 -->
+        <view class='weui-flex list_emptyList' wx:for="{{emptyList}}" wx:key="{{item.id}}" style="align-items: center;">
+          <view style="padding-right:15rpx;height:50rpx;"><text class="goods_con_invalid">失效</text></view>
+          <view class='goods_image'>
+            <image src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100'}}" mode="aspectFill"></image>
+          </view>
+          <view class='goods_details'>
+            <view class='goods_title' style="color:#666666;">{{item.name}}{{item.spec}}</view>
+            <view class="goods_tiem" wx:if="{{item.start_selling_time!=''}}"><text>已下线</text></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 猜你喜欢 -->
+    <view class='like' wx:if="{{deliciousDetails!=''}}">
+      <view class='like_title weui-flex'>
+        <image src='/images/icon/collection.png' mode="widthFix"></image>
+        <text>猜你喜欢</text>
+      </view>
+      <view class="like_con">
+        <navigator 
+          url='/pages/home/goods_details/index?id={{item.id}}' 
+          hover-class="none" 
+          class="like_list" 
+          wx:for="{{deliciousDetails}}"
+          wx:key="{{item.id}}">
+        <view class="like_lists">
+          <view class="like_img">
+            <image src="{{HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100'}}" mode="aspectFill"></image>
+          </view>
+          <view class='like_list_title'>{{item.name}}</view>
+          <view class='like_label'>
+            <text>{{item.spec}}</text>
+          </view>
+          <view class='like_buttom'>
+            <view>￥{{item.price_whole}}<text style="font-size:25rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+            <text>￥{{item.original_price}}</text>
+            <view wx:if="{{item.is_sales_hide==0}}">月销{{item.sales_volume}}件</view>
+            <view style="height:40rpx;" wx:else></view>
+          </view>
+          <view class='like_shopping' wx:if="{{item.deliver_date==''}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="handleAddCard">
+            <view 
+              wx:if="{{item.shopping_cart_num>0}}"
+              class="weui-badge">{{item.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2.png' mode="widthFix"></image>
+          </view>
+          <view class='like_shopping' wx:else data-id="1" data-index="{{index}}" catchtap="handleScreen">
+            <view 
+              wx:if="{{item.shopping_cart_num>0}}"
+              class="weui-badge">{{item.shopping_cart_num}}</view>
+            <image src='/images/icon/cart2.png' mode="widthFix"></image>
+          </view>
+        </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 操作块 -->
+<view id='footer' class="weui-flex" wx:if="{{list!=''}}">
+  <view class="check_all weui-flex">
+    <view bindtap="bindChecks_all" class="check_select weui-flex {{check_all==1?'select':''}}" style="margin-top:0;">
+      <view wx:if='{{check_all==1}}'></view>
+    </view>
+    全选
+  </view>
+  <view class="footer_right weui-flex">
+    <view class="footer_total">合计 <text>￥{{money_whole}}</text><text style="font-size:28rpx;" wx:if="{{money_small}}">.{{money_small}}</text></view>
+    <view class="footer_settlement" bindtap="bindSettlement">结算</view>
+  </view>
+</view>
+<!-- 空数据操作块 -->
+<view id='footer' class="weui-flex" style="justify-content: space-between;" wx:else>
+  <view class="footer_total">合计 <text>￥0.00</text></view>
+  <view class="footer_settlement footer_settlement_hui">去结算</view>
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>
+
+<button 
+  wx:if="{{token==''}}"
+  class="weui-btn login-wrap"
+  hover-class='none'
+  open-type="getUserInfo"
+  bindgetuserinfo="bindGetUserInfo">授权用户信息</button>

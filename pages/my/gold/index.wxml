@@ -1,0 +1,44 @@
+<!--pages/my/gold/index.wxml-->
+<view class='gold'>
+  <view id="header">
+    <view class='header weui-flex'>
+      <view class='header_left'>
+        <view>￥{{money}}</view>
+        <text>当前余额(元)</text>
+      </view>
+      <view class='header_right'>
+        <image src='/images/icon/LittleMan@2x.png' mode='widthFix'></image>
+      </view>
+    </view>
+  </view>
+  <view class="gold_item">
+    <!-- 选项卡 -->
+    <view class='nav weui-flex'>
+      <block wx:for-items="{{tabs}}" wx:key="{{index}}">
+        <view 
+          id="{{index}}" 
+          class="nav_item {{activeIndex == index ? 'nav_item_on' : ''}}" 
+          bindtap="tabClick">
+          {{item}}
+        </view>
+      </block>
+    </view>
+    <view class='account'>
+      <block wx:if="{{list.length!=0}}">
+        <view class='account_list weui-flex' wx:for="{{list}}" wx:key="{{index}}">
+          <view class='account_con'>
+            <text>{{item.comment}}</text>
+            <view>{{item.create_time}}</view>
+          </view>
+          <view class="account_operation" style="{{item.type==0?'color:#F14638;':''}}">
+            {{item.type==0?'+':'-'}}{{item.amount}}
+          </view>
+        </view>
+      </block>
+      <view wx:else class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+    </view>
+  </view>
+</view>
+

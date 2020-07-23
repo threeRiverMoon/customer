@@ -1,0 +1,220 @@
+<view id='confirm_order'>
+  <image src="/images/icon/beijing.png" mode="widthFix"></image>
+  <view class="confirm_order-item">
+  <!-- 联系人信息 -->
+  <view class='contacts'>
+    <view class='contacts_title'>联系人信息</view>
+      <view class='contacts_con'>
+        <view class='contacts_con_view'>{{store.name}}</view>
+        <text>提货地址：{{store.province}}{{store.region}}{{store.detail}}</text>
+        <view class='contacts_con_address'>
+          <image src="/images/icon/address@2x.png" mode="widthFix"></image>
+          <text>距离您{{store.distance}}KM</text> | 
+          <text bindtap="handleMap">查看地图</text>
+          <image src="/images/icon/go_back@2x.png" mode="widthFix" 
+            style="width:13rpx;margin:0 0 5rpx 10rpx;"></image>
+        </view>
+        <view class='contacts_con_view'>
+          <input type="text" value="{{name}}" bindinput="bindInput" data-name="name" placeholder="输入姓名"/>
+          <input type="number" maxlength="11" bindinput="bindInput" data-name="phone" value="{{phone}}" placeholder="输入手机号"/>
+        </view>
+        <view class="contacts_con_tiem">预计提货时间：
+          <text data-id='1' data-index="-1" bindtap="handleScreen" >{{shoppingTiem}}</text>
+          <image src="/images/icon/go_back@2x.png" mode="widthFix"></image>
+        </view>
+      </view>
+    </view>
+    <!-- 商品明细 -->
+    <view class='contacts'>
+      <view class='contacts_title'>商品明细</view>
+      <view class='goods_con' wx:for="{{goods_list}}" wx:key="{{index}}">
+        <view class='contacts_tiem'>
+          <image src="/images/icon/address.png" mode="widthFix"></image>
+          <image style="float: right;margin:20rpx 0 0 0;" src="/images/icon/right.png" mode="widthFix"></image>
+          <view>{{item.date}}  自提  
+            <text style="color:#EF291A;float:right;" data-id='1' data-index="{{index}}" bindtap="handleScreen">{{item.tiem}}</text>
+          </view>
+        </view>
+        <!-- 商品列表 -->
+        <view class='weui-flex' wx:for="{{item.list}}" wx:key="{{item.id}}">
+          <view class='goods_image'>
+            <image src="{{HOST}}{{item.thumbnail}}" mode="aspectFill"></image>
+          </view>
+          <view class='goods_details'>
+            <view class='goods_title'>{{item.name}}</view>
+            <view class='goods_information'>
+              <view class='information_price'>￥{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text>{{item.unit?'/'+item.unit:''}}</view>
+              <text class='prime_cost'>￥{{item.original_price}}</text>
+              <text class='information_num'>X{{item.count}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class='goods_total'>
+        <!-- <view class='total_sum'>商品总额 <text>￥97.40</text></view> -->
+        <view class='goods_coupon' data-id='1' bindtap="handleCoupon">优惠券 
+          <image src="/images/icon/right.png" mode="widthFix"></image>
+          <text class="goods_coupon_selse" 
+            wx:if="{{coupon!==''}}" 
+            data-id='1' 
+            bindtap="handleCoupon">优惠 ￥{{list.yes[coupon].spec[1]||0}}</text>
+          <text class="goods_coupon_selse" wx:elif="{{coupon==''&&list.yes.length!=0}}" data-id='1' bindtap="handleCoupon">{{list.yes.length}}张优惠券可用</text>
+          <text wx:else data-id='1' bindtap="handleCoupon">暂无优惠券可用</text>
+        </view>
+        <view class='goods_coupon'>
+          订单备注 
+          <input 
+            type="text" 
+            maxlength="20"
+            bindinput="bindInput" 
+            value="{{user_comment}}" 
+            data-name="user_comment" 
+            placeholder="填写您需要备注的信息">
+          </input>
+        </view>
+        <view class="payment">
+          <view wx:if="{{coupon!==''}}">
+            已优惠 <text style="color:#333333;margin-right:20rpx;">￥{{list.yes[coupon].spec[1]||0}}</text>
+          </view>
+          <view>实付总额 <text >￥{{price_whole}}<text style="font-size:27rpx;" wx:if="{{price_small}}">.{{price_small}}</text></text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view id='footer'>
+    <button data-id='1' bindtap="bindConfirm" class='footer_phone' wx:if="{{name&&phone}}">立即支付</button>
+    <button data-id='1' bindtap="bindConfirm" style="background-color:#999999;border:none;" class='footer_phone' wx:else>立即支付</button>
+    <view class='payment' 
+      style="float:right;margin-top:0;">
+      待支付 <text >￥{{price_whole}}<text style="font-size:27rpx;" wx:if="{{price_small}}">.{{price_small}}</text></text>
+    </view>
+  </view>
+</view>
+
+
+<!-- 再次确认自提点弹窗 -->
+<view id='mask' wx:if="{{confirm==1}}">
+  <view class="mask_cons">
+    <view class="mask_cons_title">
+      请您再次确认自提点
+      <image src='/images/icon/lujing190.png' mode="widthFix" data-id='0' bindtap="bindConfirm" ></image>
+    </view>
+    <!-- 内容 -->
+    <view class="mask_cons_warp">
+      <view class='cons_warp_viewTan'>{{store.name}}</view>
+      <view class="cons_warp_viewtan_text">提货地址：{{store.province}}{{store.region}}{{store.detail}}</view>
+      <view class='cons_warp_addressTan'>
+        <image src="/images/icon/zu387.png" mode="widthFix"></image>
+        <text>距离您{{store.distance}}KM</text>
+      </view>
+      <view class="tan_people">提货人：{{name}} {{phone}}</view>
+      <view class="tan_buttom" bindtap="bindPayment">确认支付</view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 优惠券 -->
+<view id='mask' data-id='0' bindtap="handleCoupon" wx:if="{{couponState==1}}"></view>
+<view class='mask_screen' style="height:auto;" wx:if="{{couponState==1}}">
+  <view class='screen_title'>选择优惠券 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleCoupon"></image>
+  </view>
+  <!-- 导航 -->
+  <view class="screen_nav">
+    <view bindtap="bindNavs" data-id="0" class="li {{nav==0?'av_li':''}}">可用优惠券 
+      <text wx:if="{{list.yes.length!=0}}">（{{list.yes.length}}）</text>
+    </view>
+    <view bindtap="bindNavs" data-id="1" class="li {{nav==1?'av_li':''}}">不可用优惠券
+      <text wx:if="{{list.no.length!=0}}">（{{list.no.length}}）</text>
+    </view>
+  </view>
+  <view class='screen_con coupon'>
+  <!-- 可用优惠券 -->
+    <block wx:if="{{nav==0}}">
+      <view class='coupon_list weui-flex' wx:for="{{list.yes}}" wx:if="{{list.yes}}">
+        <image class="coupon_list-background" src="/images/icon/coupons.png"></image>
+        <view class='coupon_left'>
+          <view class='coupon_price'>￥<text>{{item.spec[1]||0}}</text></view>
+          <view class='coupon_condition'>满{{item.spec[0]}}元可用</view>
+        </view>
+        <view class='coupon_con weui-flex'>
+          <view>{{item.coupon_name}}</view>
+          <text>{{item.effective_time}} ~ {{item.invalidate_time}}</text>
+        </view>
+        <view class='coupon_right'>
+          <image src="/images/icon/{{coupon===index?'lujing189.png':'yuan.png'}}" mode="widthFix"
+            bindtap="bindCouponSelse" data-money="{{item.money}}" data-id="{{index}}" ></image>
+        </view>
+      </view>
+      <view class="weui-loadmore weui-loadmore_line" wx:if="{{list.yes.length==0}}">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:#F6F7F9;">暂无数据</view>
+      </view>
+    </block>
+    
+    <!-- 不可用优惠券 -->
+    <block wx:if="{{nav==1}}">
+      <view class='coupon_list' wx:for="{{list.no}}" wx:if="{{list.no.length!=0}}">
+        <view class='weui-flex' style="padding-bottom:0;">
+          <image class="coupon_list-background" src="/images/icon/coupons_hui.png"></image>
+          <view class='coupon_left'>
+            <view class='coupon_price'>￥<text>{{item.spec[1]||0}}</text></view>
+            <view class='coupon_condition'>满{{item.spec[0]}}元可用</view>
+          </view>
+          <view class='coupon_con weui-flex'>
+            <view>{{item.coupon_name}}</view>
+            <text>{{item.effective_time}} ~ {{item.invalidate_time}}</text>
+          </view>
+          <view class='coupon_right'>
+            <image src="/images/icon/zu386.png" mode="widthFix"></image>
+          </view>
+        </view>
+        <view class="coupon_no">不可使用原因：{{item.coupon_status_text}}</view>
+      </view>
+      <view class="weui-loadmore weui-loadmore_line" wx:if="{{list.no.length==0}}">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:#F6F7F9;">暂无数据</view>
+      </view>
+    </block>
+  </view>
+  <view class="screen_no" data-id='' bindtap="handleCouponOn">不使用优惠券</view>
+</view>
+
+
+<!-- 选择自提时间弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1&&tiemIndex!==0}}"></view>
+<view class='mask_screen' wx:if="{{screen==1&&tiemIndex!==0}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class='mask_tiem weui-flex'>
+      <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+    </view>
+  </view>
+</view>
+
+<!-- 选择自提时间弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1&&tiemIndex===0}}"></view>
+<view class='mask_screen' wx:if="{{screen==1&&tiemIndex===0}}">
+  <view class='screen_title'>选择自提时间
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val3}}" data-id="1" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{time3}}" style="line-height: 60rpx">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class='mask_tiem weui-flex'>
+      <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+    </view>
+  </view>
+</view>

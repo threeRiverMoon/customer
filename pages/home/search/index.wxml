@@ -1,0 +1,149 @@
+<!--pages/home/search/index.wxml-->
+<view class='search' style="{{list==''?'background-color: #ffffff;':'background-color: #F3F3F3;'}}">
+  <view class='header'>
+    <view class='header_search weui-flex'>
+      <image src='/images/icon/search@2x.png' mode='widthFix'></image>
+      <input type='text' 
+        placeholder='{{text}}'
+        value="{{value}}" 
+        data-name="search"
+        bindinput='bindInput'></input>
+      <view bindtap="handleSearch">搜索</view>
+    </view>
+  </view>
+  <!-- 搜索历史 -->
+  <view class='history' wx:if="{{search==''&&list==''&&history!=''&&searchs==0}}">
+    <view class='history_title'>
+      搜索历史
+      <image src='/images/icon/clear@2x.png' mode='widthFix' bindtap="handleDel"></image>
+    </view>
+    <view class='history_con'>
+      <view class='history_con_text' 
+        wx:for="{{history}}"
+        data-name="{{item}}"
+        bindtap="handleSelect">
+        {{item}}
+      </view>
+    </view>
+  </view>
+  <!-- 热门搜索 -->
+  <view class='popular' wx:if="{{search==''&&list==''&&popularList!=''&&searchs==0}}">
+    <view class='popular_title'>
+      热门搜索
+    </view>
+    <view class='popular_con'>
+      <view 
+        class='popular_con_text' 
+        wx:for="{{popularList}}"
+        data-name="{{item.name}}"
+        bindtap="handleSelect">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+  <!-- 搜索内容 -->
+  <view class="nothing" wx:if="{{list==''&&searchs==1}}">
+    <image src='/images/icon/13.gif' mode='widthFix'></image>
+    <view>没有相关的商品，换个关键词试试吧~</view>
+  </view>
+  <view class="goods" wx:if="{{list!=''}}">
+    <view class="weui-navbar">
+      <block wx:for-items="{{tabs}}" wx:key="{{index}}">
+        <view 
+          id="{{index}}" 
+          class="weui-navbar__item {{screenIndex == index ? 'weui-bar__item_on' : ''}}" 
+          bindtap="tabClick">
+          <view class="weui-navbar__title">
+            {{item}}
+            <view class="navbar__title-order">
+              <block wx:if="{{index==tabs.length-1}}">
+                <view class="navbar__title-ascending {{order==2?'title-ascending':''}}"></view>
+                <view class="navbar__title-descending {{order==1?'title-descending':''}}"></view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="goods_con">
+      <navigator 
+        wx:for="{{list}}"
+        url="/pages/home/goods_details/index?id={{item.id}}" 
+        hover-class="none" 
+        class="like_list weui-flex">
+        <view class='list_left weui-flex'>
+          <image src="{{item.thumbnail?HOST+item.thumbnail+'?x-oss-process=image/resize,m_fill,h_100,w_100':'/images/icon/load2.png'}}" mode="aspectFill" class="{{item.show?'like_img like_img-active':'like_img'}}"></image>
+          <view class="special" wx:if="{{item.can_order==1&&item.av_status==0}}">
+            已售罄
+          </view>
+          <view class="special" wx:elif="{{item.av_status==1}}">
+            即将开始
+          </view>
+        </view>
+        <view class='list_con weui-flex'>
+          <view class='like_list_title'>{{item.name}}</view>
+          <view class='like_label' wx:if="{{item.tag_name!=''}}">
+            <text wx:for="{{item.tag_name}}">{{item}}</text>
+          </view>
+          <view class='like_tag'>
+            <view wx:if="{{item.purchas_limit_each_one_everyday!=0}}">
+              限{{item.purchas_limit_each_one_everyday}}份
+            </view>
+            <view wx:if="{{item.purchas_limit_each_sum_everyday!=0}}">
+              限购{{item.purchas_limit_each_sum_everyday}}份
+            </view>
+            <!-- <view wx:if="{{item.purchase_limit!=0}}">
+              限量{{item.purchase_limit}}份
+            </view> -->
+            <view wx:if="{{index1===0&&item.tag_name!=''}}" wx:for="{{item.tag_name}}" wx:for-item="items" wx:for-index="index1">{{items}}</view>
+          </view>
+          <view class='like_buttom'>
+            <view>￥{{item.price_whole}}<text style="font-size:20rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+            <text>￥{{item.original_price}}</text>
+          </view>
+        </view>
+        <view class='list_right' wx:if="{{(item.can_order==1&&item.av_status==0)||item.av_status==1}}" catchtap="handle">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/carts.png' mode='widthFix'></image>
+        </view>
+        <view class='list_right' wx:elif="{{item.deliver_date==''}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="handleAddCard">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/cart2.png' mode='widthFix'></image>
+        </view>
+        <view class='list_right' wx:else data-id="1" data-index="{{index}}" catchtap="handleScreen">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/cart2.png' mode='widthFix'></image>
+        </view>
+      </navigator>
+      <view class="edition" wx:if="{{page_index <= page_count}}">
+        <image src='/images/icon/logo.png' mode='widthFix' style="margin-bottom:10rpx;"></image>
+        <view>已经到我的底线了</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+		<view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>

@@ -1,0 +1,28 @@
+<!--pages/home/system/index.wxml-->
+<view id='system'>
+  <view class='menu'>
+    <navigator url='/pages/my/article_details/index?name=隐私政策' hover-class="none" class='menu_item weui-cell'>
+      <view>隐私政策</view>
+      <image src='/images/icon/right.png' mode='widthFix'></image>
+    </navigator>
+    <navigator url='/pages/my/article_details/index?name=用户协议' hover-class="none" class='menu_item weui-cell'>
+      <view>用户协议</view>
+      <image src='/images/icon/right.png' mode='widthFix'></image>
+    </navigator>
+    <navigator url='/pages/my/article_details/index?name=营业执照' hover-class="none" class='menu_item weui-cell'>
+      <view>营业执照</view>
+      <image src='/images/icon/right.png' mode='widthFix'></image>
+    </navigator>
+    <navigator url='/pages/my/feed_back/index' hover-class="none" class='menu_item weui-cell'>
+      <view>意见反馈</view>
+      <image src='/images/icon/right.png' mode='widthFix'></image>
+    </navigator>
+  </view>
+</view>
+
+<!-- 版本 -->
+<view class='edition'>
+  <image src='/images/icon/logo.png' mode='widthFix'></image>
+  <view>为餐小栈小程序</view>
+  <view>版本号:1.0.101.1</view>
+</view>

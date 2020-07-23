@@ -1,0 +1,157 @@
+/* pages/tarbar/my/index.wxss */
+@import "index.skeleton.wxss";
+.phoen{
+  background-color: #fff0d1;
+  color: #ee7e19;
+  padding: 20rpx 3.5%;
+  font-size: 26rpx;
+  z-index: 999;
+  margin:0 0 20rpx 0;
+}
+.nav-bar{
+  position:fixed;
+  top:0;
+  width:100%;
+  background-color: #C3D939;
+  color: #fff;
+  z-index: 22;
+  font-size: 14px;
+}
+.on{
+  background-color: #fff;
+  color:#000;
+}
+.nav-bar_title{
+  position:absolute;
+  text-align: center;
+}
+
+.bg{
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+.header-hd{
+  align-items: center;
+  justify-content: space-between;
+  color: #ee7e19;
+  background-color: #fff0d1;
+  font-size:26rpx;
+  padding:20rpx 30rpx;
+}
+
+.header-hd text{
+  display: inline-block;
+  width:100rpx;
+  line-height:45rpx;
+  text-align: center;
+  border: 2rpx solid #ee7e19;
+  border-radius:10rpx;
+}
+.main{
+  position:relative;
+  padding:30rpx;
+}
+.common{
+  margin:0 0 20rpx 0;
+  background-color: #fff;
+  border-radius:10rpx;
+  padding:0 10rpx;
+}
+.muser-hd{
+  align-items: center;
+  padding:40rpx 20rpx;
+}
+.muser-hd_avatar{
+  width:100rpx;
+  height:100rpx;
+  margin:0 30rpx 0 0;
+}
+.muser-hd_avatar image{
+  width: 100%;
+  height: 100%;
+  border-radius:50%;
+}
+.muser-hd_name{
+  font-size: 46rpx;
+  color: #3B3B3B;
+}
+.muser-bd{
+  padding:10rpx 0 40rpx;
+  align-items: center;
+}
+.muser-bd-cell{
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font-size:26prx;
+  color: #666666;
+}
+.muser-bd-cell::before{
+  content: "";
+  width:2rpx;
+  height:68rpx;
+  background-color:#EEEDEF;
+  position: absolute;
+  left:-1rpx;
+  top:20rpx;
+}
+.muser-bd-cell:first-child::before{
+  display: none;
+}
+.morder-hd{
+  padding:27rpx 30rpx 23rpx;
+  align-items: center;
+  border-bottom: solid 1px #EEEDEF;
+}
+.common-more{
+  padding:0 40rpx 0 0;
+  font-size: 26rpx;
+  color: #999;
+}
+.morder-hd_title{
+  font-size:30rpx;
+  flex: 1;
+}
+.morder-bd{
+  position: relative;
+  padding:33rpx 0;
+  align-items: center;
+}
+.morder-bd-cell{
+  flex: 1;
+  text-align: center;
+  font-size: 24rpx;
+  color: #666;
+  position: relative;
+}
+.morder-bd-cell image{
+  width: 46rpx;
+  margin:0 0 19rpx 0;
+}
+.morder-bd-cell__badge{
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top:-8rpx;
+  background-color: #EF291A;
+  line-height: 26rpx;
+  border-radius:50%;
+  font-size:20rpx;
+  color: #fff;
+  min-width:26rpx;
+  padding:0 5rpx;
+  box-sizing: border-box;
+  margin:0 0 0 18rpx;
+}
+.mnav .weui-cell{
+  padding:36rpx 20rpx 30rpx;
+  font-size: 30rpx;
+  border-bottom: solid 1px #EEEDEF;
+  line-height: 30rpx;
+}
+.mnav .weui-cell::last-chid{
+  border: none;
+}
+

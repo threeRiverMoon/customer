@@ -1,0 +1,11 @@
+/* pages/my/article_details/index.wxss */
+@import '/wxParse/wxParse.wxss';
+page{
+  padding: 30rpx 0;
+}
+.wxParse-p{
+  padding:0 30rpx;
+}
+image{
+  width: 100%;
+}

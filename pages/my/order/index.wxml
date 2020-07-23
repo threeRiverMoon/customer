@@ -1,0 +1,83 @@
+<view id="container">
+  <!-- 选项 -->
+  <view class="weui-navbar">
+    <block wx:for-items="{{tabs}}" wx:key="{{index}}">
+      <view 
+        id="{{index}}" 
+        class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" 
+        bindtap="tabClick">
+        <view class="weui-navbar__title">{{item.name}}
+          <text class="num" wx:if="{{item.total!=0&&index!=tabs.length-1}}">{{item.total}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!-- 空数据 -->
+  <view class="nothing" wx:if="{{list==''}}" style="color:#3D4244;">
+    <image src='/images/icon/13.gif' mode='widthFix'></image>
+    <view>您还没有相关的订单哦~</view>
+  </view>
+  <view id="wrap">
+    <!-- 订单内容 -->
+    <view class="wrap-main" 
+      wx:for="{{list}}">
+      <view data-id="{{item.order_id}}-{{item.detail.data[0].id}}"
+          bindtap="handleDetails">
+        <view class="wrap-main-title">
+          <text class="user">自提点：{{item.store_name}}</text>
+          <text class="order_no">订单号：{{item.order_id}}</text>
+          <view class="status" style="{{item.status==1?'color:#EF291A;':item.status==5?'color:#C3D939;':item.status==0||item.status==2?'color:#13E02B;':'color:#666666;'}}">
+            {{item.status==0?'待付款':item.status==1?'已付款':item.status==2?'待自提':item.status==3?'未自提':item.status==4?'已自提':item.status==5?'审核中':item.status==6&&item.detail.data[0].after_status==4?'已自提':item.detail.data[0].after_type==2&&item.status==6?'店长联系':item.status==6&&item.sale_status==2?'已同意':item.status==6&&item.sale_status==1?'审核中':item.status==6&&item.sale_status==3?'已拒绝':item.status==6&&item.sale_status==4?'已取消':item.status==-2?'已关闭':item.status==-1?'已取消':''}}
+          </view>
+        </view>
+        <view class="wrap-main-content">
+          <view class="commodity_img">
+          <!-- for需网络图片比较好，这里测试用的是本地图 -->
+            <view 
+              class="commodity_img-item"
+              wx:for="{{item.detail.data}}"
+              wx:for-item="items">
+              <image 
+                src="{{items.thumbnail?HOST+items.thumbnail:'/images/icon/load2.png'}}"
+                mode="aspectFill"
+                class="{{item.show?'commodity_img-active':''}}">
+              </image>
+            </view>
+          </view>
+          <view class="total">
+            <text>共{{item.detail.total_count}}件 合计: </text>
+            <view class="price">￥{{item.price_whole}}<text style="font-size:24rpx;" wx:if="{{item.price_small}}">.{{item.price_small}}</text></view>
+          </view>
+          <view class="verification" wx:if="{{item.delivery_date}}">
+            <text>预计提货日期：<text class="date">{{item.delivery_date||''}} {{item.delivery_duration||''}}</text></text>
+          </view>
+        </view>
+      </view>
+      <view class='operation' wx:if="{{item.status!=1}}">
+        <button style="color:#999999;border:2rpx solid #999999;" 
+          data-id='{{item.order_id}}'  
+          bindtap="handleShopowner"
+          wx:if="{{item.status==0}}">
+          取消订单
+        </button>
+        <button wx:if="{{item.status==0}}" data-name="{{item}}" bindtap="handlePayment">立即支付</button>
+        <button wx:if="{{item.status==2||item.status==3}}" 
+          data-id='{{item.order_id}}-{{item.detail.data[0].id}}' 
+          bindtap="handleMelt">
+          确认自提
+        </button>
+        <navigator url='/pages/my/apply_refund/index?order_id={{item.order_id}}-{{item.detail.data[0].id}}' wx:if="{{item.status==4}}" hover-class="none">
+          <button style="color:#999999;border:2rpx solid #999999;" >申请售后</button>
+        </navigator>
+        <navigator url='/pages/my/refund_details/index?order_id={{item.order_id}}-{{item.detail.data[0].id}}&sale_id={{item.sale_id}}' hover-class="none" 
+          wx:if="{{item.status==5||item.status==6||item.status==7}}">
+          <button style="color:#999999;border:2rpx solid #999999;" >售后详情</button> 
+        </navigator>
+      </view>
+    </view>
+    <view class="buttom" bindtap="onBottom" wx:if="{{page_index < page_count}}">
+      查看更多  <image src="/images/icon/bottom.png"></image>
+    </view>
+  </view>
+</view>
+

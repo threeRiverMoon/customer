@@ -1,0 +1,9 @@
+<!--pages/my/feed_back_two/index.wxml-->
+<view class="feed_back_two">
+  <view class='feed_back_two_main'>
+    <image src='/images/icon/success@2x2.png' mode='widthFix'></image>
+    <view>提交成功</view>
+    <text>提交成功，我们工作人员会尽快处理</text>
+  </view>
+  <navigator hover-class="none" open-type="navigateBack"  class='account_add_button'>确认</navigator>
+</view>

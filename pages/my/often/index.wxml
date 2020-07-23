@@ -1,0 +1,74 @@
+<!--pages/my/often/index.wxml -->
+<view id='container'>
+  <view class="title" wx:if="{{id==''}}"><image src='/images/icon/purchase.png' mode="widthFix"></image> 经常购</view>
+  <!-- 经常购买 -->
+  <view class='like'>
+    <view class="like_con">
+      <navigator 
+        url='/pages/home/goods_details/index?id={{item.id}}' 
+        hover-class="none" 
+        class="like_list" 
+        wx:for="{{list}}"
+        wx:key="{{item.id}}"
+      >
+        <view class="like_img">
+          <image src="{{item.thumbnail?HOST+item.thumbnail:'/images/icon/load2.png'}}" mode="aspectFill" class="{{item.show?'like_img-active':''}}"></image>
+          <view class="special" wx:if="{{item.can_order==1&&item.av_status==0}}">
+            已售罄
+          </view>
+          <view class="special" wx:elif="{{item.av_status==1}}">
+            即将开始
+          </view>
+        </view>
+        <view class='like_list_title'>{{item.name}}</view>
+        <view class='like_label'>
+          <text>{{item.spec}}</text>
+        </view>
+        <view class='like_buttom'>
+          <view>￥{{item.price}}{{item.unit?'/'+item.unit:''}}</view>
+          <text>￥{{item.original_price}}</text>
+          <view wx:if="{{item.is_sales_hide==0}}">月销{{item.sales_volume}}件</view>
+          <view style="height:40rpx;" wx:else></view>
+        </view>
+        <view class='like_shopping' data-id="{{item.id}}" catchtap="handleAddCard" wx:if="{{(item.can_order==1&&item.av_status==0)||item.av_status==1}}">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/carts.png' mode="widthFix"></image>
+        </view>
+        <view class='like_shopping' data-id="{{item.id}}" catchtap="handleAddCard" wx:elif="{{item.deliver_date==''}}">
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/cart2.png' mode="widthFix"></image>
+        </view>
+         <view class='like_shopping' data-id="1" data-index="{{index}}" catchtap="handleScreen" wx:else>
+          <view 
+            wx:if="{{item.shopping_cart_num>0}}"
+            class="weui-badge">{{item.shopping_cart_num}}</view>
+          <image src='/images/icon/cart2.png' mode="widthFix"></image>
+        </view>
+      </navigator>
+    </view>
+  </view>
+
+</view>
+
+<!-- 选择自提日期弹窗 -->
+<view id='mask' data-id='0' bindtap="handleScreen" wx:if="{{screen==1}}"></view>
+<view class='mask_screen' wx:if="{{screen==1}}">
+  <view class='screen_title'>选择自提时间 
+    <image src='/images/icon/lujing191.png' mode="widthFix" data-id='0' bindtap="handleScreen"></image>
+  </view>
+  <view class='screen_con'>
+    <picker-view indicator-style="line-height: 60rpx" style="width: 100%;height:400rpx;margin:20rpx 0;" value="{{val}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{time2}}" style="line-height: 60rpx">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='mask_tiem weui-flex'>
+        <view class='cancel' data-id='0' bindtap="handleScreen">取消</view>
+        <view class='confirm' data-id='2' bindtap="handleScreen">确定</view>
+      </view>
+  </view>
+</view>

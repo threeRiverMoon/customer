@@ -1,0 +1,34 @@
+/* pages/home/system/index.wxss */
+#system{
+  padding-top: 20rpx;
+}
+.menu{
+  background-color: #ffffff;
+  padding-left: 35rpx;
+}
+.menu>.weui-cell{
+  padding: 25rpx 30rpx 25rpx 0;
+}
+.menu_item{
+  border-bottom: 2rpx solid #EEEEEE;
+  color: #666666;
+  font-size: 30rpx;
+}
+.menu_item view{
+  flex: 1;
+}
+.menu_item image{
+  width: 32rpx;
+}
+.edition{
+  position: absolute;
+  bottom: 38rpx;
+  left: 0;right: 0;
+  margin: auto;
+}
+.edition image{
+  margin-bottom: 10rpx;
+}
+.edition view{
+  line-height: 50rpx;
+}
