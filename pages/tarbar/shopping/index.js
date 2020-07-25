@@ -329,6 +329,7 @@ Page({
       })
       return false;
     }
+    app.globalData.list = JSON.stringify(commodityLists)
     const params = {
       commodityLists: JSON.stringify(commodityLists),
       store_id
@@ -616,6 +617,7 @@ Page({
       { page_index, page_size, shoppingTiem, state, length } = self.data,
     { list } = self.data,
       datas = new Date(),
+    checkedList = JSON.parse(app.globalData.list || '[]'),
     params = {
       page_index,
       page_size,
@@ -625,24 +627,28 @@ Page({
       let { page_count, data, deliver_date } = res.data,
         removal = [],
         loseList = [],
+        tempList = [],
         goodsList = [];
         self.setData({
           length: data.length
         })
       data.map(item=> {
+        const index = checkedList.findIndex(ob => ob.id === item.id);
         item = Object.assign(item, {
-          check: false,
+          check: index !== -1,
           price : parseFloat(item.price),
           original_price: parseFloat(item.original_price),
           show: false,
           price_whole: String(item.price).split('.')[0],
           price_small: String(item.price).split('.')[1] ||''
         })
-        if(removal.indexOf(item.deliver_time)) {
+        if(removal.indexOf(item.deliver_time) < 0) {
           removal.push(item.deliver_time)
         }
         if(item.is_order == 0) {
           loseList.push(item)
+        } else {
+          tempList.push(item)
         }
         return item;
       })
@@ -677,7 +683,7 @@ Page({
         })
       }
       self.setData({
-        check_all:0,
+        check_all: tempList.length === checkedList.length ? 1 : 0,
         money:0,
         deliver_date
       })
