@@ -55,12 +55,6 @@ Page({
       token,
       store_id
     })
-    if (token !== '') {
-      this.getCartList();
-      this.getInvalidCartList()
-      this.getDddDelicious()
-      app.cart_list_count()
-    }
   },
   
   /**
@@ -74,20 +68,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // let self = this,
-    //   { token, store_id } = app.globalData,
-    //   { deliver_date } = this.data;
-    // this.setData({
-    //   page_index: 1,
-    //   token,
-    //   store_id
-    // })
-    // if (token !== '') {
-    //   this.getCartList();
-    //   this.getInvalidCartList()
-    //   this.getDddDelicious()
-    //   app.cart_list_count()
-    // }
+    let { token } = app.globalData;
+    if (token !== '') {
+      this.getCartList();
+      this.getInvalidCartList()
+      this.getDddDelicious()
+      app.cart_list_count()
+    }
   },
 
   /**
@@ -632,62 +619,53 @@ Page({
     params = {
       page_index,
       page_size,
-      deliver_time: datas.getFullYear()+'-'+shoppingTiem
-      
+      deliver_time: `${datas.getFullYear()}-${shoppingTiem}`.replace('月', '-').replace('日', '')
     };
-    params['deliver_time'] = params['deliver_time'].replace("月", "-")
-    params['deliver_time'] = params['deliver_time'].replace("日", "")
     app.ajax.cartList(params).then(res => {
       let { page_count, data, deliver_date } = res.data,
-        removal = '',
-        goods_list = [],
-        goodsList = [],
-        splice = [];
+        removal = [],
+        loseList = [],
+        goodsList = [];
         self.setData({
           length: data.length
         })
-      for(var i = 0; i < data.length; i++){
-        data[i]['check'] = false;
-        data[i]['price'] = parseFloat(data[i]['price']);
-        data[i]['original_price'] = parseFloat(data[i]['original_price']);
-        data[i].show = false
-        data[i].price_whole = String(data[i].price).split('.')[0]
-        data[i].price_small = String(data[i].price).split('.')[1] || ''
-        goods_list.push(data[i].deliver_time)
-      }
-      removal = Array.from(new Set(goods_list));
-      for (let i in removal) {
-        goodsList.push({
-          date: removal[i],
-          list: []
+      data.map(item=> {
+        item = Object.assign(item, {
+          check: false,
+          price : parseFloat(item.price),
+          original_price: parseFloat(item.original_price),
+          show: false,
+          price_whole: String(item.price).split('.')[0],
+          price_small: String(item.price).split('.')[1] ||''
         })
-        if (i == removal.length-1 ){
-          goodsList.push({
-            date: '失效',
-            list: []
-          })
+        if(removal.indexOf(item.deliver_time)) {
+          removal.push(item.deliver_time)
         }
-      }
-      for (let i in data) {
-        for (let j in goodsList) {
-          if (data[i].deliver_time == goodsList[j].date) {
-            goodsList[j].list.push(data[i])
-          }
+        if(item.is_order == 0) {
+          loseList.push(item)
         }
-      }
-      for (let i = 0; i <self.data.length; i++ ){
-        for (let i in goodsList) {
-          for (let j in goodsList[i].list) {
-            if (goodsList[i].list[j].is_order == 0) {
-              if (goodsList.length - 1 !== i) {
-                goodsList[goodsList.length - 1].list.push(goodsList[i].list[j])
-                goodsList[i].list.splice(j, 1)
-              }
-            }
-          }
+        return item;
+      })
 
-        }
-      }
+      if(removal.length) {
+        removal.forEach(item => {
+          let temp = []
+          data.forEach(ob => {
+            if(ob.deliver_time === item) {
+              temp.push(ob)
+            }
+          })
+          goodsList.push({
+            date: item,
+            list: temp
+          })
+        })
+        goodsList.push({
+          date: '失效',
+          list: loseList
+        })
+      } 
+     
       if (page_index == '1') {
         self.setData({
           list: goodsList,
