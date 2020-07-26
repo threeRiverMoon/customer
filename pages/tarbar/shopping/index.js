@@ -215,7 +215,10 @@ Page({
       { id, index } = e.currentTarget.dataset,
       { deliciousDetails } = selt.data;
     if (id == 1) {
-      selt.getTiem(deliciousDetails[index].deliver_date.day + 1, deliciousDetails[index].deliver_date.start_deliver, function () {
+      let ob = deliciousDetails[index].deliver_date
+      let day = ob && ob.day ? ob.day + 1 : 1
+      let time = ob && ob.start_deliver ? ob.start_deliver  :  ''
+      selt.getTiem(day, time, function () {
         // if (selt.data.time2.length <= 1) {
           selt.setData({
             index,
