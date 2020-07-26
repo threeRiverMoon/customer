@@ -44,8 +44,7 @@ Page({
    */
   onLoad: function (options) {
     let self = this,
-    { HOST, token, store_id } = app.globalData,
-    { deliver_date } = this.data
+    { HOST, token, store_id } = app.globalData;
     self.setData({
       HOST
     })
@@ -89,6 +88,12 @@ Page({
    */
   onUnload: function () {
 
+  },
+
+  guide: function() {
+    wx.switchTab({    
+      url:"/pages/tarbar/classify/index"
+    })
   },
 
   /**
@@ -769,13 +774,17 @@ Page({
     const params = {}
     app.ajax.addDelicious(params).then(res => {
       let { data } = res;
-      for( let i in data ){
-        data[i].price = parseFloat(data[i].price)
-        data[i].original_price = parseFloat(data[i].original_price)
-        data[i].show = false
-        data[i].price_whole = String(data[i].price).split('.')[0]
-        data[i].price_small = String(data[i].price).split('.')[1] || ''
-      }
+
+      data.map(item => {
+        item = Object.assign(item, {
+          price: parseFloat(item.price),
+          original_price: parseFloat(item.original_price),
+          show: false,
+          price_whole: String(item.price).split('.')[0],
+          price_small: String(item.price).split('.')[1] || ''
+        })
+        return item
+      })
       self.setData({
         deliciousDetails:data
       })
@@ -838,12 +847,9 @@ Page({
       params = {
         commodity_id: id,
         count: 1
-      },
-      datas = new Date();
+      };
     if (delivery_date) {
-      params['delivery_date'] = datas.getFullYear() + '-' + delivery_date
-      params['delivery_date'] = params['delivery_date'].replace("月", "-")
-      params['delivery_date'] = params['delivery_date'].replace("日", "")
+      params.delivery_date = `${ new Date().getFullYear()}-${delivery_date.replace("月", "-").replace("日", "")}`
     }
     wx.showLoading({
       title: '加入购物车中',
@@ -854,11 +860,12 @@ Page({
         title: res.msg,
         mask: true
       })
-      for (let i = 0; i < deliciousDetails.length; i++) {
-        if (deliciousDetails[i].id == id) {
-          deliciousDetails[i].shopping_cart_num++
+      deliciousDetails.map(item => {
+        if(item.id == id) {
+          item.shopping_cart_num == item.shopping_cart_num || 0
+          item.shopping_cart_num++
         }
-      }
+      })
       this.setData({
         deliciousDetails,
         screen:0

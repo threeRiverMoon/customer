@@ -1,7 +1,9 @@
 <!-- 空数据 -->
 <view class="shoping">
   <view wx:if="{{list==''&&emptyList==''}}" class="nothing empty">
-    购物车为空
+    <image src='/images/icon/collection.png' mode="heightFix"></image>
+    购物车还是空的
+    <view class='guide' bindtap="guide">去逛逛</view>
   </view>
 </view>
 

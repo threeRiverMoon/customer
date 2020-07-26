@@ -3,7 +3,25 @@ page{
   background-color: #F3F3F3;
 }
 .empty{
-  
+  padding: 0;
+}
+
+.empty image {
+  display: block;
+  height: 100rpx;
+  width: auto;
+  margin: 50rpx auto;
+}
+
+.empty .guide {
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 250rpx;
+  border-radius: 30rpx;
+  margin: 10rpx auto;
+  background: #26D051;
+  color: #fff;
+
 }
 
 #container{
